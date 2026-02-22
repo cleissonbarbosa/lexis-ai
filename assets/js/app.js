@@ -518,7 +518,7 @@ function onHandResults(results) {
     const landmarks = results.multiHandLandmarks[0];
     drawHandSkeleton(landmarks, ui.canvas.width, ui.canvas.height);
 
-    const raw = classifyGesture(landmarks);
+    const raw = classifyGesture(landmarks, state.signLanguageId);
     const { letter, confidence } = smoothDetection(state, raw.letter, raw.confidence);
     state.currentLetter = letter;
     state.confidence = confidence;
