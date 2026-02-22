@@ -41,6 +41,8 @@
     #f5f9ff;
 }
 
+[hidden] { display: none !important; }
+
 /* ─── Dark Theme ─────────────────────────────────────────────── */
 [data-theme="dark"] {
   --bg: #0b1120;
