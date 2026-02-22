@@ -1,64 +1,55 @@
 # Lexis AI
 
-Aplicação web para reconhecimento do alfabeto manual de Libras em tempo real, rodando **100% no navegador** com MediaPipe Hands.
+Lexis AI is a real-time manual sign alphabet recognition running **100% in the browser** with MediaPipe Hands.
 
-## Objetivo
+## Highlights
 
-O projeto foi organizado para funcionar como site estático, ideal para deploy direto no **GitHub Pages**, sem backend e sem build.
+- Browser-only runtime (no backend required)
+- Real-time webcam hand tracking with MediaPipe Hands
+- Geometric heuristic classifier for manual alphabet letters
+- Auto-add while holding a stable sign
+- Built-in phrase editor (add, space, backspace, clear, copy)
+- Keyboard shortcuts for faster interaction
+- Responsive UI for desktop and mobile
+- Sign language selector with localized interface text
 
-## Funcionalidades
+## Supported Sign Language Modes
 
-- Reconhecimento de sinais via webcam (MediaPipe Hands)
-- Classificador geométrico simples para letras do alfabeto manual
-- Auto-adição de letras ao manter o sinal estável
-- Histórico de letras, estatísticas e referência visual do alfabeto
-- Edição rápida de frase (espaço, apagar, limpar, copiar)
-- Atalhos de teclado para UX mais fluida
-- Interface responsiva para desktop e mobile
+Users can switch between these sign language modes directly in the UI:
 
-## Estrutura
+- 🇧🇷 Libras (Língua Brasileira de Sinais)
+- 🇺🇸 ASL (American Sign Language)
+- 🇬🇧 BSL (British Sign Language)
+- 🇮🇳 IPSL (Indo-Pakistani Sign Language)
+- 🇨🇳 CSL (Chinese Sign Language - Zhōngguó Shǒuyǔ - 中国手语)
+- 🇯🇵 JSL (Japanese Sign Language - Nihon Shūwa - 日本手話)
+- 🇵🇹 LGP (Língua Gestual Portuguesa)
 
-```text
-.
-├── index.html
-├── assets
-│   ├── css
-│   │   └── main.css
-│   ├── icons
-│   │   └── favicon.svg
-│   └── js
-│       └── app.js
-└── .github
-    └── workflows
-        └── deploy-pages.yml
-```
+Interface text localization is automatically applied per selected mode (Portuguese, English, Urdu, Chinese, Japanese).
 
-## Executar localmente
+Note: the current detection classifier is one-hand A-Z baseline oriented. Some modes are marked experimental until language-specific classifiers are added.
 
-Como é estático, basta servir os arquivos com qualquer servidor HTTP.
+## Run Locally
 
-Exemplo com Python:
+Serve the folder with any static HTTP server.
+
+Example:
 
 ```bash
 python3 -m http.server 8080
 ```
 
-Depois acesse `http://localhost:8080`.
+Then open `http://localhost:8080`.
 
-## Deploy no GitHub Pages
+## Deploy to GitHub Pages
 
-O workflow `deploy-pages.yml` publica automaticamente o conteúdo da branch `main` no GitHub Pages em push manual ou automático.
+This repository includes `.github/workflows/deploy-pages.yml` for GitHub Pages deployment.
 
-Pré-requisitos no repositório GitHub:
+1. Go to `Settings > Pages` in your GitHub repository.
+2. Set **Build and deployment** to **GitHub Actions**.
+3. Push to `main` (or trigger the workflow manually).
 
-1. `Settings > Pages > Build and deployment`: selecione **GitHub Actions**.
-2. Dê push da branch `main`.
+## Privacy
 
-## Privacidade
-
-- O processamento acontece no browser.
-- Não há upload de vídeo para servidor.
-
-## Renomeação
-
-O branding foi atualizado de **LibrasAI** para **Lexis AI** em interface, título e documentação.
+- All processing happens in-browser.
+- No camera video is uploaded to servers.

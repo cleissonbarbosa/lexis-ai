@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Lexis AI: reconhecimento de alfabeto manual de Libras em tempo real, totalmente no navegador.">
+  <meta name="description" content="Lexis AI: reconhecimento de língua de sinais em tempo real, totalmente no navegador.">
   <meta name="theme-color" content="#0e7490">
-  <title>Lexis AI | Reconhecimento de Libras no Navegador</title>
+  <title>Lexis AI | Sign Language Recognition in Browser</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="./assets/icons/favicon.svg">
   <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 <body>
   <div id="loadingOverlay" aria-live="polite">
     <div class="loading-logo">Lexis<span> AI</span></div>
-    <p class="loading-subtitle">Reconhecimento de Libras em tempo real no browser</p>
+    <p class="loading-subtitle" id="loadingSubtitle">Reconhecimento de língua de sinais em tempo real</p>
     <div class="loading-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
       <div class="loading-fill" id="loadFill"></div>
     </div>
@@ -30,13 +30,14 @@
       <div class="brand-icon" aria-hidden="true">🤟</div>
       <div>
         <h1 class="brand-name">Lexis AI</h1>
-        <p class="brand-tagline">Libras em tempo real, sem backend</p>
+        <p class="brand-tagline" id="brandTagline">Língua de sinais em tempo real</p>
       </div>
     </div>
     <div class="top-badges">
       <span class="badge badge-live" id="appStatus">Pronto para iniciar</span>
-      <span class="badge">Browser-first</span>
-      <span class="badge">GitHub Pages</span>
+      <span class="badge" id="badgeBrowserFirst">Browser-first</span>
+      <span class="badge" id="badgePages">GitHub Pages</span>
+      <button class="badge badge-settings" id="btnSettings" title="Configurações" aria-label="Abrir configurações">⚙️</button>
     </div>
   </header>
 
@@ -44,14 +45,22 @@
     <section class="left-col">
       <article class="card camera-card reveal" style="--delay: 0.05s">
         <div class="card-head">
-          <h2>Câmera e Detecção</h2>
-          <p>Posicione a mão no centro e mantenha o sinal estável por 1.5s.</p>
+          <h2 id="cameraCardTitle">Câmera e Detecção</h2>
+          <p id="cameraCardSubtitle">Posicione a mão no centro e mantenha o sinal estável por 1.5s.</p>
+        </div>
+
+        <div class="mode-switcher">
+          <label class="selector-field" for="signLanguageSelect">
+            <span id="signLanguageLabel">Língua de sinais ativa</span>
+            <select id="signLanguageSelect" class="select-input" aria-label="Selecionar língua de sinais"></select>
+          </label>
+          <p class="mode-note" id="modeNote"></p>
         </div>
 
         <div class="camera-wrapper" id="cameraWrapper">
           <div class="camera-placeholder" id="placeholder">
             <div class="camera-placeholder-icon" aria-hidden="true">📷</div>
-            <p>Clique em <strong>Iniciar câmera</strong> para começar o reconhecimento.</p>
+            <p id="cameraPlaceholderText">Clique em <strong>Iniciar câmera</strong> para começar o reconhecimento.</p>
           </div>
 
           <video id="videoEl" autoplay muted playsinline></video>
@@ -80,7 +89,7 @@
           </div>
         </div>
 
-        <div class="controls" role="group" aria-label="Controles de reconhecimento">
+        <div class="controls" role="group" id="controlsGroup" aria-label="Controles de reconhecimento">
           <button class="btn btn-primary" id="btnStart">Iniciar câmera</button>
           <button class="btn" id="btnAdd" disabled>Adicionar letra</button>
           <button class="btn" id="btnBackspace" disabled>Apagar</button>
@@ -91,65 +100,125 @@
 
         <div class="sentence-box">
           <div class="sentence-head">
-            <span>Palavra / Frase formada</span>
+            <span id="sentenceTitle">Palavra / Frase formada</span>
             <span id="sentenceCount">0 caracteres</span>
           </div>
           <p class="sentence-text" id="sentenceText" aria-live="polite"><span class="cursor"></span></p>
-          <p class="hint">Atalhos: <kbd>Enter</kbd> iniciar/parar, <kbd>+</kbd> adicionar, <kbd>Backspace</kbd> apagar.</p>
+          <p class="hint" id="shortcutHint">Atalhos: <kbd>Enter</kbd> iniciar/parar, <kbd>+</kbd> adicionar, <kbd>Backspace</kbd> apagar.</p>
         </div>
       </article>
     </section>
 
     <aside class="right-col">
       <article class="card reveal" style="--delay: 0.1s">
-        <div class="panel-title">Estatísticas</div>
+        <div class="panel-title" id="panelStatsTitle">Estatísticas</div>
         <div class="stats-row">
           <div class="stat-box">
             <span class="stat-value" id="statLetters">0</span>
-            <span class="stat-label">Letras detectadas</span>
+            <span class="stat-label" id="statLettersLabel">Letras detectadas</span>
           </div>
           <div class="stat-box">
             <span class="stat-value" id="statConf">0%</span>
-            <span class="stat-label">Confiança média</span>
+            <span class="stat-label" id="statConfLabel">Confiança média</span>
           </div>
         </div>
       </article>
 
       <article class="card reveal" style="--delay: 0.15s">
-        <div class="panel-title">Histórico recente</div>
+        <div class="panel-title" id="panelHistoryTitle">Histórico recente</div>
         <div class="history-row" id="historyRow">
-          <span class="muted">Nenhuma letra detectada ainda.</span>
+          <span class="muted" id="historyEmpty">Nenhuma letra detectada ainda.</span>
         </div>
       </article>
 
       <article class="card reveal" style="--delay: 0.2s">
-        <div class="panel-title">Referência do Alfabeto Manual</div>
+        <div class="panel-title" id="panelReferenceTitle">Referência do Alfabeto Manual</div>
         <div class="alphabet-grid" id="alphabetGrid"></div>
         <div class="reference-card" id="referenceCard" hidden>
           <span class="ref-letter" id="refLetter">A</span>
           <span class="ref-emoji" id="refEmoji">✊</span>
-          <p class="ref-desc" id="refDesc">Punho fechado com polegar ao lado.</p>
+          <p class="ref-desc" id="refDesc">Forma de referência para a letra A.</p>
         </div>
       </article>
 
       <article class="card reveal" style="--delay: 0.25s">
-        <div class="panel-title">Como usar</div>
+        <div class="panel-title" id="panelHowToTitle">Como usar</div>
         <ol class="instructions">
-          <li>Inicie a câmera e permita acesso no navegador.</li>
-          <li>Posicione a mão com boa iluminação e fundo limpo.</li>
-          <li>Mantenha o sinal por ~1.5s para auto-adicionar.</li>
-          <li>Use os botões para editar o texto reconhecido.</li>
+          <li id="inst1">Inicie a câmera e permita acesso no navegador.</li>
+          <li id="inst2">Posicione a mão com boa iluminação e fundo limpo.</li>
+          <li id="inst3">Mantenha o sinal por ~1.5s para auto-adicionar.</li>
+          <li id="inst4">Use os botões para editar o texto reconhecido.</li>
         </ol>
       </article>
     </aside>
   </main>
 
   <footer class="site-footer reveal" style="--delay: 0.3s">
-    <p>Lexis AI roda 100% no navegador. Nenhum vídeo é enviado para servidor.</p>
+    <p id="footerText">Lexis AI roda 100% no navegador. Nenhum vídeo é enviado para servidor.</p>
   </footer>
 
   <div class="toast" id="toast" hidden>
     <span id="toastMessage"></span>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsOverlay" hidden>
+    <div class="modal" role="dialog" aria-labelledby="settingsModalTitle" aria-modal="true">
+      <div class="modal-header">
+        <h2 id="settingsModalTitle">Configurações</h2>
+        <button class="modal-close" id="btnCloseSettings" aria-label="Fechar">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-group">
+          <label class="setting-label" for="settingHoldDuration">
+            <span id="settingHoldDurationLabel">Tempo para auto-adicionar</span>
+            <span class="setting-value" id="settingHoldDurationValue">1.5s</span>
+          </label>
+          <input type="range" id="settingHoldDuration" class="setting-range" min="500" max="5000" step="100" value="1500">
+          <p class="setting-hint" id="settingHoldDurationHint">Tempo que o sinal precisa ser mantido para auto-adicionar a letra.</p>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label" for="settingMinConfidence">
+            <span id="settingMinConfidenceLabel">Confiança mínima</span>
+            <span class="setting-value" id="settingMinConfidenceValue">65%</span>
+          </label>
+          <input type="range" id="settingMinConfidence" class="setting-range" min="30" max="95" step="5" value="65">
+          <p class="setting-hint" id="settingMinConfidenceHint">Confiança mínima para considerar uma detecção válida.</p>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label" for="settingAutoAddConfidence">
+            <span id="settingAutoAddConfidenceLabel">Confiança para auto-adicionar</span>
+            <span class="setting-value" id="settingAutoAddConfidenceValue">70%</span>
+          </label>
+          <input type="range" id="settingAutoAddConfidence" class="setting-range" min="40" max="98" step="2" value="70">
+          <p class="setting-hint" id="settingAutoAddConfidenceHint">Confiança mínima necessária para auto-adicionar uma letra.</p>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label" for="settingCooldown">
+            <span id="settingCooldownLabel">Intervalo entre adições</span>
+            <span class="setting-value" id="settingCooldownValue">0.9s</span>
+          </label>
+          <input type="range" id="settingCooldown" class="setting-range" min="200" max="3000" step="100" value="900">
+          <p class="setting-hint" id="settingCooldownHint">Tempo de espera após auto-adicionar antes de aceitar novo sinal.</p>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label" for="settingDetectionSmoothing">
+            <span id="settingDetectionSmoothingLabel">Suavização da detecção</span>
+            <span class="setting-value" id="settingDetectionSmoothingValue">3 frames</span>
+          </label>
+          <input type="range" id="settingDetectionSmoothing" class="setting-range" min="1" max="10" step="1" value="3">
+          <p class="setting-hint" id="settingDetectionSmoothingHint">Número de frames consecutivos com o mesmo sinal para confirmar a detecção. Maior = mais estável, menor = mais rápido.</p>
+        </div>
+
+        <div class="setting-group setting-actions">
+          <button class="btn btn-small" id="btnResetSettings">Restaurar padrões</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js" crossorigin="anonymous"></script>
