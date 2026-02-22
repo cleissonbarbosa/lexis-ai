@@ -18,42 +18,49 @@ export const SIGN_LANGUAGES = [
     id: "libras",
     locale: "pt-BR",
     support: "core",
+    available: true,
     label: "Libras"
   },
   {
     id: "asl",
     locale: "en",
     support: "core",
+    available: false,
     label: "ASL (American Sign Language)"
   },
   {
     id: "bsl",
     locale: "en",
     support: "experimental",
+    available: false,
     label: "BSL (British Sign Language)"
   },
   {
     id: "ipsl",
     locale: "ur",
     support: "experimental",
+    available: false,
     label: "Indo-Pakistani Sign Language"
   },
   {
     id: "csl",
     locale: "zh-CN",
     support: "experimental",
+    available: false,
     label: "Chinese Sign Language (Zhōngguó Shǒuyǔ)"
   },
   {
     id: "jsl",
     locale: "ja",
     support: "experimental",
+    available: false,
     label: "Japanese Sign Language (Nihon Shūwa)"
   },
   {
     id: "lgp",
     locale: "pt-PT",
     support: "experimental",
+    available: false,
     label: "LGP (Língua Gestual Portuguesa)"
   }
 ];

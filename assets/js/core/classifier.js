@@ -50,6 +50,7 @@ function extractHandFeatures(lms) {
   const thumbIndexDist = dist3d(thumbTip, indexTip);
   const thumbMiddleDist = dist3d(thumbTip, middleTip);
   const thumbRingDist = dist3d(thumbTip, ringTip);
+  const thumbPinkyDist = dist3d(thumbTip, pinkyTip);
   const indexMiddleDist = dist3d(indexTip, middleTip);
   const middleRingDist = dist3d(middleTip, ringTip);
   const ringPinkyDist = dist3d(ringTip, pinkyTip);
@@ -74,18 +75,28 @@ function extractHandFeatures(lms) {
   const thumbTouchingIndex = thumbIndexDist < 0.045;
   const thumbTouchingMiddle = thumbMiddleDist < 0.045;
 
+  // thumb tip is above (visually higher than) all finger knuckles — S posture
+  const thumbAboveKnuckles = thumbTip.y < Math.min(indexMcp.y, middleMcp.y, ringMcp.y, pinkyMcp.y);
+
+  // thumb is below finger PIPs — thumb tucked under (M/N/E posture)
+  const thumbBelowPips = thumbTip.y > Math.min(indexPip.y, middlePip.y);
+
+  // fingers spread: check distances between adjacent fingertips
+  const fingersTight = indexMiddleDist < 0.05 && middleRingDist < 0.05 && ringPinkyDist < 0.05;
+
   const extCount = [thumbExtended, indexExtended, middleExtended, ringExtended, pinkyExtended].filter(Boolean).length;
 
   return {
-    thumb: { extended: thumbExtended, curl: thumbCurl, tip: thumbTip, mcp: thumbMcp },
+    thumb: { extended: thumbExtended, curl: thumbCurl, tip: thumbTip, mcp: thumbMcp, ip: thumbIp },
     index: { extended: indexExtended, curl: indexCurl, tip: indexTip, pip: indexPip, mcp: indexMcp, hooked: indexHooked, dipAngle: indexDipAngle, pointingSideways: indexPointingSideways, pointingDown: indexPointingDown },
     middle: { extended: middleExtended, curl: middleCurl, tip: middleTip, pip: middlePip, mcp: middleMcp, pointingSideways: middlePointingSideways },
-    ring: { extended: ringExtended, curl: ringCurl, tip: ringTip },
-    pinky: { extended: pinkyExtended, curl: pinkyCurl, tip: pinkyTip },
+    ring: { extended: ringExtended, curl: ringCurl, tip: ringTip, mcp: ringMcp, pip: ringPip },
+    pinky: { extended: pinkyExtended, curl: pinkyCurl, tip: pinkyTip, mcp: pinkyMcp, pip: pinkyPip },
     distances: {
       thumbIndex: thumbIndexDist,
       thumbMiddle: thumbMiddleDist,
       thumbRing: thumbRingDist,
+      thumbPinky: thumbPinkyDist,
       indexMiddle: indexMiddleDist,
       middleRing: middleRingDist,
       ringPinky: ringPinkyDist,
@@ -98,6 +109,9 @@ function extractHandFeatures(lms) {
     thumbBetweenIndexMiddle,
     thumbTouchingIndex,
     thumbTouchingMiddle,
+    thumbAboveKnuckles,
+    thumbBelowPips,
+    fingersTight,
     extCount,
     isRightHand,
     wrist,
@@ -119,164 +133,203 @@ export function classifyGesture(lms) {
   const threeFingersUp = f.index.extended && f.middle.extended && f.ring.extended && !f.pinky.extended;
   const fourFingersUp = f.index.extended && f.middle.extended && f.ring.extended && f.pinky.extended;
   const onlyIndex = f.index.extended && !f.middle.extended && !f.ring.extended && !f.pinky.extended;
+  const onlyPinky = !f.index.extended && !f.middle.extended && !f.ring.extended && f.pinky.extended;
 
-  if (noFingersUp) {
-    if (f.thumb.extended && f.distances.thumbPalm > 0.055) {
-      add("A", 0.84);
-    } else if (f.thumb.extended) {
-      add("A", 0.72);
-    }
-  }
-
+  // ── B ──────────────────────────────────────────────────────────────
+  // Four fingers up, thumb folded, fingers together
   if (fourFingersUp && !f.thumb.extended) {
-    const fingersTight = f.distances.indexMiddle < 0.05 && f.distances.middleRing < 0.05;
-    add("B", fingersTight ? 0.9 : 0.78);
+    const tight = f.distances.indexMiddle < 0.05 && f.distances.middleRing < 0.05 && f.distances.ringPinky < 0.05;
+    add("B", tight ? 0.92 : 0.80);
   }
   if (f.extCount === 5) {
-    add("B", 0.62);
+    // All 5: lower confidence B (open hand, thumb not fully tucked)
+    add("B", 0.60);
   }
 
+  // ── C / Ç ──────────────────────────────────────────────────────────
+  // Curved hand forming a "C", index curled and distance from thumb moderate
   if (f.extCount <= 2 && !noFingersUp) {
-    if (f.distances.thumbIndex > 0.05 && f.distances.thumbIndex < 0.16) {
-      if (f.index.curl > 0.4 && f.index.curl < 2.8) {
-        add("C", 0.74);
+    if (f.distances.thumbIndex > 0.05 && f.distances.thumbIndex < 0.17) {
+      if (f.index.curl > 0.35 && f.index.curl < 2.9) {
+        add("C", 0.76);
+        add("Ç", 0.72); // Ç is same static shape
       }
     }
   }
-  if (noFingersUp && f.thumb.extended && f.distances.thumbIndex > 0.08 && f.distances.thumbIndex < 0.16) {
-    add("C", 0.68);
+  if (noFingersUp && f.thumb.extended && f.distances.thumbIndex > 0.08 && f.distances.thumbIndex < 0.17) {
+    add("C", 0.70);
+    add("Ç", 0.66);
   }
 
+  // ── D ──────────────────────────────────────────────────────────────
+  // Index up, thumb and other fingers form a circle (thumb near middle)
   if (onlyIndex && !f.index.pointingSideways) {
     if (f.thumbTouchingMiddle || f.distances.thumbMiddle < 0.06) {
-      add("D", 0.85);
+      add("D", 0.87);
+    } else if (f.distances.thumbIndex < 0.07) {
+      add("D", 0.76);
     } else {
-      add("D", 0.72);
+      add("D", 0.68);
     }
   }
 
-  if (noFingersUp && !f.thumb.extended) {
-    if (f.distances.thumbIndex < 0.04 && f.distances.thumbPalm < 0.07) {
-      add("E", 0.78);
-    } else if (f.distances.thumbPalm < 0.06) {
-      add("E", 0.65);
-    }
-  }
-
+  // ── F ──────────────────────────────────────────────────────────────
+  // Middle+ring+pinky extended, thumb and index form a circle
   if (f.middle.extended && f.ring.extended && f.pinky.extended && !f.index.extended) {
     if (f.thumbTouchingIndex || f.distances.thumbIndex < 0.05) {
-      add("F", 0.88);
-    }
-  }
-  if (f.middle.extended && f.ring.extended && f.pinky.extended && f.distances.thumbIndex < 0.04) {
-    add("F", 0.82);
-  }
-
-  if (onlyIndex && f.index.pointingSideways && f.thumb.extended) {
-    if (!f.index.pointingDown) {
-      add("G", 0.80);
+      add("F", 0.90);
+    } else if (f.distances.thumbIndex < 0.07) {
+      add("F", 0.80);
     }
   }
 
+  // ── G ──────────────────────────────────────────────────────────────
+  // Index and thumb pointing sideways (horizontal extension)
+  if (onlyIndex && f.index.pointingSideways && f.thumb.extended && !f.index.pointingDown) {
+    add("G", 0.82);
+  }
+
+  // ── H ──────────────────────────────────────────────────────────────
+  // Index and middle pointing sideways together
   if (twoFingersUp && f.index.pointingSideways && f.middle.pointingSideways) {
-    add("H", 0.82);
+    add("H", 0.84);
   }
 
-  if (!f.index.extended && !f.middle.extended && !f.ring.extended && f.pinky.extended) {
-    if (!f.thumb.extended) {
-      add("I", 0.88);
-    } else {
-      add("I", 0.74);
-    }
+  // ── I / J ──────────────────────────────────────────────────────────
+  // Only pinky extended, thumb NOT extended → I (J is same static shape)
+  if (onlyPinky && !f.thumb.extended) {
+    add("I", 0.90);
+    add("J", 0.50); // J = I + movement, can't distinguish statically
   }
 
-  if (!f.index.extended && !f.middle.extended && !f.ring.extended && f.pinky.extended) {
-    add("J", 0.52);
-  }
-
+  // ── K ──────────────────────────────────────────────────────────────
+  // Index and middle up and spread, thumb between them pointing up
   if (twoFingersUp && !f.index.pointingSideways && f.thumb.extended) {
-    if (f.distances.indexMiddle > 0.035) {
-      add("K", 0.80);
+    if (f.distances.indexMiddle > 0.04) {
+      add("K", 0.82);
     }
   }
 
+  // ── L ──────────────────────────────────────────────────────────────
+  // Index pointing up, thumb pointing sideways (L shape), others curled
   if (onlyIndex && f.thumb.extended && !f.index.pointingSideways) {
     if (f.distances.thumbIndex > 0.07) {
-      add("L", 0.86);
+      add("L", 0.88);
     }
   }
 
-  if (noFingersUp && !f.thumb.extended) {
-    if (f.distances.thumbPalm < 0.06 && f.thumb.tip.y > f.index.mcp.y) {
-      add("M", 0.62);
-    }
-  }
-
-  if (noFingersUp && !f.thumb.extended) {
-    if (f.distances.thumbPalm < 0.065) {
-      add("N", 0.58);
-    }
-  }
-
+  // ── O ──────────────────────────────────────────────────────────────
+  // All fingers and thumb form a circle
   if (noFingersUp || f.extCount <= 1) {
     if (f.thumbTouchingIndex && f.distances.thumbPalm > 0.03) {
-      add("O", 0.80);
+      // Make sure it's a full O (more fingers bundled), not just A
+      if (!f.thumb.extended) {
+        add("O", 0.84);
+      }
     }
   }
 
+  // ── P ──────────────────────────────────────────────────────────────
+  // Like K but pointing downward
   if (twoFingersUp && f.index.pointingDown) {
-    add("P", 0.76);
+    add("P", 0.78);
   }
 
+  // ── Q ──────────────────────────────────────────────────────────────
+  // Like G but pointing downward
   if (onlyIndex && f.index.pointingDown && f.thumb.extended) {
-    add("Q", 0.74);
+    add("Q", 0.76);
   }
 
+  // ── R ──────────────────────────────────────────────────────────────
+  // Index and middle crossed (very close together)
   if (twoFingersUp && !f.index.pointingSideways) {
     if (f.distances.indexMiddle < 0.025) {
-      add("R", 0.83);
+      add("R", 0.85);
     }
   }
 
-  if (noFingersUp && !f.thumb.extended) {
-    if (f.distances.thumbPalm < 0.08 && !f.thumbBetweenIndexMiddle) {
-      add("S", 0.70);
+  // ── U ──────────────────────────────────────────────────────────────
+  // Index and middle extended together (parallel, close), thumb NOT extended between them
+  if (twoFingersUp && !f.index.pointingSideways && !f.thumb.extended) {
+    if (f.distances.indexMiddle >= 0.015 && f.distances.indexMiddle < 0.042) {
+      add("U", 0.86);
     }
   }
 
-  if (noFingersUp && f.thumbBetweenIndexMiddle) {
-    add("T", 0.78);
-  }
-
-  if (twoFingersUp && !f.index.pointingSideways) {
-    if (f.distances.indexMiddle < 0.04 && f.distances.indexMiddle >= 0.01) {
-      add("U", 0.84);
+  // ── V ──────────────────────────────────────────────────────────────
+  // Index and middle spread apart (V / peace sign)
+  if (twoFingersUp && !f.index.pointingSideways && !f.thumb.extended) {
+    if (f.distances.indexMiddle >= 0.042) {
+      add("V", 0.87);
     }
   }
 
-  if (twoFingersUp && !f.index.pointingSideways) {
-    if (f.distances.indexMiddle >= 0.04) {
-      add("V", 0.85);
-    }
+  // ── W ──────────────────────────────────────────────────────────────
+  // Index, middle, ring up and spread
+  if (threeFingersUp) {
+    const spread = f.distances.indexMiddle > 0.03 && f.distances.middleRing > 0.03;
+    add("W", spread ? 0.88 : 0.75);
   }
 
-  if (threeFingersUp && !f.thumb.extended) {
-    add("W", 0.85);
-  }
-  if (threeFingersUp && f.thumb.extended) {
-    add("W", 0.75);
-  }
-
+  // ── X ──────────────────────────────────────────────────────────────
+  // Index finger hooked/bent (curved downward)
   if (f.index.hooked && !f.middle.extended && !f.ring.extended && !f.pinky.extended) {
-    add("X", 0.78);
+    add("X", 0.80);
   }
 
-  if (f.thumb.extended && !f.index.extended && !f.middle.extended && !f.ring.extended && f.pinky.extended) {
-    add("Y", 0.88);
+  // ── Y ──────────────────────────────────────────────────────────────
+  // Thumb and pinky extended, others curled
+  if (f.thumb.extended && onlyPinky) {
+    add("Y", 0.90);
   }
 
+  // ── Z ──────────────────────────────────────────────────────────────
+  // Index pointing up, traced Z — statically same as D without thumb circle
   if (onlyIndex && !f.index.pointingSideways && !f.thumb.extended) {
-    add("Z", 0.48);
+    add("Z", 0.50);
+  }
+
+  // ── Closed-fist cluster: A / E / M / N / S / T ────────────────────
+  // All have noFingersUp. We disambiguate by thumb position and distances.
+  if (noFingersUp) {
+
+    // T (highest priority): thumb clearly between index and middle fingers
+    if (f.thumbBetweenIndexMiddle) {
+      add("T", 0.86);
+    }
+
+    // A: thumb extended to the side — NOT crossing over or under fingers
+    if (f.thumb.extended && !f.thumbBetweenIndexMiddle) {
+      add("A", f.distances.thumbPalm > 0.055 ? 0.88 : 0.74);
+    }
+
+    if (!f.thumb.extended && !f.thumbBetweenIndexMiddle) {
+      const ti = f.distances.thumbIndex;
+      const tm = f.distances.thumbMiddle;
+      const tr = f.distances.thumbRing;
+
+      // E: thumb very close to ALL fingertips (tucked under entire bunch)
+      if (ti < 0.05 && tm < 0.065 && tr < 0.09) {
+        add("E", 0.84);
+      }
+
+      // M: thumb under 3 fingers — reaches ring finger area
+      if (tm < 0.085 && tr < 0.105 && ti < 0.09) {
+        add("M", 0.72);
+      }
+
+      // N: thumb under 2 fingers — reaches middle but NOT ring
+      if (tm < 0.085 && tr >= 0.085 && ti < 0.09) {
+        add("N", 0.68);
+      }
+
+      // S: thumb folded over/across curled fingers from outside
+      // — thumb NOT touching fingers closely, moderate palm distance
+      if (ti >= 0.05 && tm >= 0.055 && f.distances.thumbPalm < 0.10) {
+        add("S", 0.74);
+      }
+    }
   }
 
   if (!results.length) {
@@ -286,3 +339,4 @@ export function classifyGesture(lms) {
   results.sort((a, b) => b.conf - a.conf);
   return { letter: results[0].letter, confidence: results[0].conf };
 }
+

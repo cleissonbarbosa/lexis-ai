@@ -96,7 +96,8 @@ export const I18N = {
     settingSoundFeedback: "Feedback sonoro",
     settingSoundFeedbackHint: "Emitir um som ao detectar/adicionar uma letra.",
     sessionLabel: "sessão",
-    themeToggle: "Alternar tema"
+    themeToggle: "Alternar tema",
+    comingSoon: "Em breve"
   },
   en: {
     pageTitle: "Lexis AI | Browser Sign Language Recognition",
@@ -195,7 +196,8 @@ export const I18N = {
     settingSoundFeedback: "Sound feedback",
     settingSoundFeedbackHint: "Play a sound when detecting/adding a letter.",
     sessionLabel: "session",
-    themeToggle: "Toggle theme"
+    themeToggle: "Toggle theme",
+    comingSoon: "Coming soon"
   },
   ur: {
     pageTitle: "Lexis AI | براؤزر میں سائن لینگویج شناخت",

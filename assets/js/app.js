@@ -67,7 +67,7 @@ function getActiveSignLanguage() {
 function readStoredSignLanguage() {
   try {
     const value = localStorage.getItem(STORAGE_KEY);
-    if (value && SIGN_LANGUAGES.some((item) => item.id === value)) {
+    if (value && SIGN_LANGUAGES.some((item) => item.id === value && item.available !== false)) {
       return value;
     }
   } catch {
@@ -326,14 +326,21 @@ function getReferenceDescription(letter) {
 function buildAlphabetGrid() {
   const activeLetter = ui.refLetter.textContent || "A";
   ui.alphabetGrid.innerHTML = "";
+  const langData = SIGN_GESTURES[state.signLanguageId] || SIGN_GESTURES.libras;
+  const letters = Object.keys(langData.alphabet);
 
-  for (const letter of LETTERS) {
+  for (const letter of letters) {
+    const gestureInfo = langData.alphabet[letter];
     const chip = document.createElement("button");
     chip.type = "button";
     chip.className = "letter-chip";
     chip.dataset.letter = letter;
-    chip.textContent = letter;
     chip.title = getReferenceDescription(letter);
+    if (gestureInfo?.icon) {
+      chip.innerHTML = `<span class="chip-letter">${letter}</span><img class="chip-icon hand-icon" src="${gestureInfo.icon}" alt="${letter}" aria-hidden="true">`;
+    } else {
+      chip.textContent = letter;
+    }
     chip.addEventListener("click", () => showReference(letter));
     ui.alphabetGrid.appendChild(chip);
   }
@@ -352,7 +359,13 @@ function showReference(letter) {
 
   ui.referenceCard.hidden = false;
   ui.refLetter.textContent = letter;
-  ui.refEmoji.textContent = gestureInfo.emoji;
+
+  if (gestureInfo.icon) {
+    ui.refEmoji.innerHTML = `<img class="ref-svg-img hand-icon" src="${gestureInfo.icon}" alt="Sinal de ${letter}">`;
+  } else {
+    ui.refEmoji.textContent = gestureInfo.emoji;
+  }
+
   ui.refDesc.textContent = gestureInfo.desc;
 
   document.querySelectorAll(".letter-chip").forEach((chip) => {
@@ -823,7 +836,12 @@ function applyTranslations() {
 
 function applySignLanguage(signLanguageId, options = {}) {
   const { persist = true, notify = true } = options;
-  const selected = getSignLanguageById(signLanguageId);
+  let selected = getSignLanguageById(signLanguageId);
+
+  // Fallback to first available language if the selected one is disabled
+  if (selected.available === false) {
+    selected = SIGN_LANGUAGES.find((item) => item.available !== false) || SIGN_LANGUAGES[0];
+  }
 
   state.signLanguageId = selected.id;
   state.locale = selected.locale;
@@ -847,7 +865,12 @@ function populateSignLanguageSelect() {
   for (const signLanguage of SIGN_LANGUAGES) {
     const option = document.createElement("option");
     option.value = signLanguage.id;
-    option.textContent = signLanguage.label;
+    if (signLanguage.available === false) {
+      option.textContent = `${signLanguage.label} (${t("comingSoon")})`;
+      option.disabled = true;
+    } else {
+      option.textContent = signLanguage.label;
+    }
     ui.signLanguageSelect.appendChild(option);
   }
 }

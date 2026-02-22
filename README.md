@@ -18,12 +18,12 @@ Lexis AI is a real-time manual sign alphabet recognition running **100% in the b
 Users can switch between these sign language modes directly in the UI:
 
 - 🇧🇷 Libras (Língua Brasileira de Sinais)
-- 🇺🇸 ASL (American Sign Language) - EXPERIMENTAL 🧪
-- 🇬🇧 BSL (British Sign Language) - EXPERIMENTAL 🧪
-- 🇮🇳 IPSL (Indo-Pakistani Sign Language) - EXPERIMENTAL 🧪
-- 🇨🇳 CSL (Chinese Sign Language - Zhōngguó Shǒuyǔ - 中国手语) - EXPERIMENTAL 🧪
-- 🇯🇵 JSL (Japanese Sign Language - Nihon Shūwa - 日本手話) - EXPERIMENTAL 🧪
-- 🇵🇹 LGP (Língua Gestual Portuguesa)
+>- 🇺🇸 ASL (American Sign Language) - **Coming Soon**
+>- 🇬🇧 BSL (British Sign Language) - **Coming Soon**
+>- 🇮🇳 IPSL (Indo-Pakistani Sign Language) - **Coming Soon**
+>- 🇨🇳 CSL (Chinese Sign Language - Zhōngguó Shǒuyǔ - 中国手语) - **Coming Soon**
+>- 🇯🇵 JSL (Japanese Sign Language - Nihon Shūwa - 日本手話) - **Coming Soon**
+>- 🇵🇹 LGP (Língua Gestual Portuguesa) - **Coming Soon**
 
 Interface text localization is automatically applied per selected mode (Portuguese, English, Urdu, Chinese, Japanese).
 
