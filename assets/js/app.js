@@ -747,7 +747,7 @@ function applyTranslations() {
   if (ui.badgePages) ui.badgePages.textContent = t("badgePages");
 
   ui.cameraCardTitle.textContent = t("cameraCardTitle");
-  ui.cameraCardSubtitle.textContent = t("cameraCardSubtitle");
+  ui.cameraCardSubtitle.textContent = t("cameraCardSubtitle", { seconds: (readStoredSettings().holdDurationMs / 1000).toFixed(1) });
 
   ui.signLanguageLabel.textContent = t("signLanguageLabel");
   ui.signLanguageSelect.setAttribute("aria-label", t("signLanguageAria"));
@@ -782,7 +782,7 @@ function applyTranslations() {
 
   ui.inst1.textContent = t("inst1");
   ui.inst2.textContent = t("inst2");
-  ui.inst3.textContent = t("inst3");
+  ui.inst3.textContent = t("inst3", { seconds: (readStoredSettings().holdDurationMs / 1000).toFixed(1) });
   ui.inst4.textContent = t("inst4");
 
   ui.footerText.textContent = t("footerText");

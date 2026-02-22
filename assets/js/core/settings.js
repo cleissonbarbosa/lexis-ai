@@ -54,6 +54,7 @@ export function createSettingsController({
 
     applyTheme(state.darkMode);
     renderSettingsValues();
+    updateAllRangeFills();
   }
 
   function renderSettingsValues() {
@@ -62,6 +63,24 @@ export function createSettingsController({
     ui.settingAutoAddConfidenceValue.textContent = `${Math.round(state.autoAddConfidence * 100)}%`;
     ui.settingCooldownValue.textContent = `${(state.cooldownMs / 1000).toFixed(1)}s`;
     ui.settingDetectionSmoothingValue.textContent = `${state.detectionSmoothing} ${t("framesUnit")}`;
+  }
+
+  /** Updates the CSS --range-fill custom property on a range input so the
+   *  gradient track visually reflects the current value. */
+  function updateRangeFill(input) {
+    const min = parseFloat(input.min) || 0;
+    const max = parseFloat(input.max) || 100;
+    const val = parseFloat(input.value) || 0;
+    const pct = ((val - min) / (max - min)) * 100;
+    input.style.setProperty("--range-fill", `${pct.toFixed(1)}%`);
+  }
+
+  function updateAllRangeFills() {
+    updateRangeFill(ui.settingHoldDuration);
+    updateRangeFill(ui.settingMinConfidence);
+    updateRangeFill(ui.settingAutoAddConfidence);
+    updateRangeFill(ui.settingCooldown);
+    updateRangeFill(ui.settingDetectionSmoothing);
   }
 
   function resetSettings() {
@@ -97,30 +116,35 @@ export function createSettingsController({
 
     ui.settingHoldDuration.addEventListener("input", (e) => {
       state.holdDurationMs = parseInt(e.target.value, 10);
+      updateRangeFill(e.target);
       renderSettingsValues();
       persistSettings();
     });
 
     ui.settingMinConfidence.addEventListener("input", (e) => {
       state.minConfidence = parseInt(e.target.value, 10) / 100;
+      updateRangeFill(e.target);
       renderSettingsValues();
       persistSettings();
     });
 
     ui.settingAutoAddConfidence.addEventListener("input", (e) => {
       state.autoAddConfidence = parseInt(e.target.value, 10) / 100;
+      updateRangeFill(e.target);
       renderSettingsValues();
       persistSettings();
     });
 
     ui.settingCooldown.addEventListener("input", (e) => {
       state.cooldownMs = parseInt(e.target.value, 10);
+      updateRangeFill(e.target);
       renderSettingsValues();
       persistSettings();
     });
 
     ui.settingDetectionSmoothing.addEventListener("input", (e) => {
       state.detectionSmoothing = parseInt(e.target.value, 10);
+      updateRangeFill(e.target);
       state.smoothingBuffer = [];
       renderSettingsValues();
       persistSettings();
