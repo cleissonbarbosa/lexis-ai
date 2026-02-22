@@ -530,11 +530,15 @@ kbd {
 /* ─── Fullscreen ─────────────────────────────────────────────── */
 .camera-card.fullscreen-mode {
   position: fixed; inset: 0; z-index: 80; border-radius: 0;
-  overflow-y: auto; background: var(--surface-solid);
+  overflow: hidden; background: var(--surface-solid);
+  display: grid; grid-template-rows: minmax(0, 1fr) auto auto; gap: 12px;
+  padding: 16px;
 }
-.camera-card.fullscreen-mode .camera-wrapper { aspect-ratio: auto; max-height: 70vh; border-radius: var(--radius-md); }
+.camera-card.fullscreen-mode > :not(.camera-wrapper):not(.controls):not(.sentence-box) { display: none !important; }
+.camera-card.fullscreen-mode .camera-wrapper { aspect-ratio: auto; max-height: none; min-height: 0; border-radius: var(--radius-md); }
+.camera-card.fullscreen-mode .controls,
+.camera-card.fullscreen-mode .sentence-box { margin-top: 0; }
 .fullscreen-bar { display: none; justify-content: space-between; align-items: center; padding: 8px 0 4px; }
-.camera-card.fullscreen-mode .fullscreen-bar { display: flex; }
 
 /* ─── Reveal Animation ───────────────────────────────────────── */
 .reveal {
