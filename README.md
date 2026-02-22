@@ -1,6 +1,6 @@
 # Lexis AI
 
-Lexis AI is a real-time manual sign alphabet recognition running **100% in the browser** with MediaPipe Hands.
+Lexis AI recognizes the manual sign alphabet in real time, running entirely in the browser with MediaPipe Hands.
 
 ## Highlights
 
