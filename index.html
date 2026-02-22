@@ -37,6 +37,7 @@
       <span class="badge badge-live" id="appStatus">Pronto para iniciar</span>
       <span class="badge" id="badgeBrowserFirst">Browser-first</span>
       <span class="badge" id="badgePages">GitHub Pages</span>
+      <button class="icon-btn" id="btnThemeToggle" title="Alternar tema" aria-label="Alternar tema claro/escuro">🌙</button>
       <button class="badge badge-settings" id="btnSettings" title="Configurações" aria-label="Abrir configurações">⚙️</button>
     </div>
   </header>
@@ -89,13 +90,18 @@
           </div>
         </div>
 
+        <div class="fullscreen-bar">
+          <span style="font-weight:700; font-size:0.95rem;" id="fullscreenTitle">Modo Tela Cheia</span>
+          <button class="btn btn-small" id="btnExitFullscreen"><span class="btn-icon">✕</span> Sair</button>
+        </div>
+
         <div class="controls" role="group" id="controlsGroup" aria-label="Controles de reconhecimento">
-          <button class="btn btn-primary" id="btnStart">Iniciar câmera</button>
-          <button class="btn" id="btnAdd" disabled>Adicionar letra</button>
-          <button class="btn" id="btnBackspace" disabled>Apagar</button>
-          <button class="btn" id="btnSpace" disabled>Espaço</button>
-          <button class="btn btn-danger" id="btnClear" disabled>Limpar</button>
-          <button class="btn" id="btnCopy" disabled>Copiar</button>
+          <button class="btn btn-primary" id="btnStart"><span class="btn-icon">▶</span> Iniciar câmera</button>
+          <button class="btn" id="btnAdd" disabled><span class="btn-icon">➕</span> Adicionar letra</button>
+          <button class="btn" id="btnBackspace" disabled><span class="btn-icon">⌫</span> Apagar</button>
+          <button class="btn" id="btnSpace" disabled><span class="btn-icon">⎵</span> Espaço</button>
+          <button class="btn btn-danger" id="btnClear" disabled><span class="btn-icon">🗑️</span> Limpar</button>
+          <button class="btn btn-accent" id="btnFullscreen" title="Tela cheia"><span class="btn-icon">⛶</span> Tela cheia</button>
         </div>
 
         <div class="sentence-box">
@@ -104,6 +110,11 @@
             <span id="sentenceCount">0 caracteres</span>
           </div>
           <p class="sentence-text" id="sentenceText" aria-live="polite"><span class="cursor"></span></p>
+          <div class="sentence-actions">
+            <button class="btn btn-small btn-success" id="btnCopy" disabled><span class="btn-icon">📋</span> <span id="btnCopyText">Copiar</span></button>
+            <button class="btn btn-small" id="btnSpeak" disabled><span class="btn-icon">🔊</span> <span id="btnSpeakText">Falar</span></button>
+            <button class="btn btn-small btn-accent" id="btnExportImg" disabled><span class="btn-icon">🖼️</span> <span id="btnExportImgText">Exportar imagem</span></button>
+          </div>
           <p class="hint" id="shortcutHint">Atalhos: <kbd>Enter</kbd> iniciar/parar, <kbd>+</kbd> adicionar, <kbd>Backspace</kbd> apagar.</p>
         </div>
       </article>
@@ -120,6 +131,13 @@
           <div class="stat-box">
             <span class="stat-value" id="statConf">0%</span>
             <span class="stat-label" id="statConfLabel">Confiança média</span>
+          </div>
+        </div>
+        <div class="session-timer-row" id="sessionTimerRow" hidden>
+          <div class="session-timer-box">
+            <span class="session-timer-icon">⏱️</span>
+            <span class="session-timer-value" id="sessionTimerValue">00:00</span>
+            <span class="session-timer-label" id="sessionTimerLabel">sessão</span>
           </div>
         </div>
       </article>
@@ -169,6 +187,27 @@
         <button class="modal-close" id="btnCloseSettings" aria-label="Fechar">&times;</button>
       </div>
       <div class="modal-body">
+        <div class="setting-group">
+          <div class="setting-toggle-row">
+            <span class="setting-label" id="settingDarkModeLabel">Tema escuro</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingDarkMode">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <div class="setting-toggle-row">
+            <span class="setting-label" id="settingSoundFeedbackLabel">Feedback sonoro</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="settingSoundFeedback">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <p class="setting-hint" id="settingSoundFeedbackHint">Emitir um som ao detectar/adicionar uma letra.</p>
+        </div>
+
         <div class="setting-group">
           <label class="setting-label" for="settingHoldDuration">
             <span id="settingHoldDurationLabel">Tempo para auto-adicionar</span>

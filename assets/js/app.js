@@ -252,7 +252,9 @@ const DEFAULT_SETTINGS = {
   minConfidence: 0.65,
   autoAddConfidence: 0.70,
   cooldownMs: 900,
-  detectionSmoothing: 3
+  detectionSmoothing: 3,
+  darkMode: false,
+  soundFeedback: true
 };
 
 const SIGN_LANGUAGES = [
@@ -386,7 +388,18 @@ const I18N = {
     settingsReset: "Configurações restauradas",
     twoHandNote: "Nota: {language} usa sistema de duas mãos. O classificador atual é otimizado para uma mão (modo experimental).",
     signDescriptionLabel: "Descrição do sinal",
-    framesUnit: "frames"
+    framesUnit: "frames",
+    btnSpeak: "Falar",
+    btnExportImg: "Exportar imagem",
+    btnFullscreen: "Tela cheia",
+    btnExitFullscreen: "Sair tela cheia",
+    toastSpeaking: "Reproduzindo texto...",
+    toastExported: "Imagem exportada!",
+    settingDarkMode: "Tema escuro",
+    settingSoundFeedback: "Feedback sonoro",
+    settingSoundFeedbackHint: "Emitir um som ao detectar/adicionar uma letra.",
+    sessionLabel: "sessão",
+    themeToggle: "Alternar tema"
   },
   en: {
     pageTitle: "Lexis AI | Browser Sign Language Recognition",
@@ -473,7 +486,18 @@ const I18N = {
     settingsReset: "Settings reset to defaults",
     twoHandNote: "Note: {language} uses a two-hand system. The current classifier is optimized for one hand (experimental mode).",
     signDescriptionLabel: "Sign description",
-    framesUnit: "frames"
+    framesUnit: "frames",
+    btnSpeak: "Speak",
+    btnExportImg: "Export image",
+    btnFullscreen: "Fullscreen",
+    btnExitFullscreen: "Exit fullscreen",
+    toastSpeaking: "Speaking text...",
+    toastExported: "Image exported!",
+    settingDarkMode: "Dark mode",
+    settingSoundFeedback: "Sound feedback",
+    settingSoundFeedbackHint: "Play a sound when detecting/adding a letter.",
+    sessionLabel: "session",
+    themeToggle: "Toggle theme"
   },
   ur: {
     pageTitle: "Lexis AI | براؤزر میں سائن لینگویج شناخت",
@@ -560,7 +584,18 @@ const I18N = {
     settingsReset: "ترتیبات بحال ہو گئیں",
     twoHandNote: "نوٹ: {language} دو ہاتھ کا نظام استعمال کرتی ہے۔ فی الحال ایک ہاتھ کے لیے (تجرباتی)۔",
     signDescriptionLabel: "اشارے کی تفصیل",
-    framesUnit: "فریمز"
+    framesUnit: "فریمز",
+    btnSpeak: "بولیں",
+    btnExportImg: "تصویر ایکسپورٹ",
+    btnFullscreen: "فل اسکرین",
+    btnExitFullscreen: "فل اسکرین سے باہر",
+    toastSpeaking: "متن بول رہا ہے...",
+    toastExported: "تصویر ایکسپورٹ ہو گئی!",
+    settingDarkMode: "ڈارک موڈ",
+    settingSoundFeedback: "آواز فیڈبیک",
+    settingSoundFeedbackHint: "حرف پہچاننے/شامل کرنے پر آواز۔",
+    sessionLabel: "سیشن",
+    themeToggle: "تھیم تبدیل"
   },
   "zh-CN": {
     pageTitle: "Lexis AI | 浏览器手语识别",
@@ -647,7 +682,18 @@ const I18N = {
     settingsReset: "已恢复默认设置",
     twoHandNote: "注意：{language} 使用双手系统。当前分类器针对单手优化（实验模式）。",
     signDescriptionLabel: "手势描述",
-    framesUnit: "帧"
+    framesUnit: "帧",
+    btnSpeak: "朗读",
+    btnExportImg: "导出图片",
+    btnFullscreen: "全屏",
+    btnExitFullscreen: "退出全屏",
+    toastSpeaking: "正在朗读...",
+    toastExported: "图片已导出！",
+    settingDarkMode: "深色模式",
+    settingSoundFeedback: "声音反馈",
+    settingSoundFeedbackHint: "检测/添加字母时播放声音。",
+    sessionLabel: "会话",
+    themeToggle: "切换主题"
   },
   ja: {
     pageTitle: "Lexis AI | ブラウザ手話認識",
@@ -734,7 +780,18 @@ const I18N = {
     settingsReset: "設定をデフォルトに戻しました",
     twoHandNote: "注意：{language} は両手システムです。現在の分類器は片手用に最適化されています（実験モード）。",
     signDescriptionLabel: "サインの説明",
-    framesUnit: "フレーム"
+    framesUnit: "フレーム",
+    btnSpeak: "読み上げ",
+    btnExportImg: "画像エクスポート",
+    btnFullscreen: "フルスクリーン",
+    btnExitFullscreen: "フルスクリーン終了",
+    toastSpeaking: "読み上げ中...",
+    toastExported: "画像をエクスポートしました！",
+    settingDarkMode: "ダークモード",
+    settingSoundFeedback: "サウンドフィードバック",
+    settingSoundFeedbackHint: "文字検出/追加時に音を鳴らします。",
+    sessionLabel: "セッション",
+    themeToggle: "テーマ切替"
   },
   "pt-PT": {
     pageTitle: "Lexis AI | Reconhecimento de Língua Gestual no Navegador",
@@ -821,7 +878,18 @@ const I18N = {
     settingsReset: "Configurações restauradas",
     twoHandNote: "Nota: {language} usa sistema de duas mãos. O classificador atual é otimizado para uma mão (modo experimental).",
     signDescriptionLabel: "Descrição do gesto",
-    framesUnit: "frames"
+    framesUnit: "frames",
+    btnSpeak: "Falar",
+    btnExportImg: "Exportar imagem",
+    btnFullscreen: "Ecrã inteiro",
+    btnExitFullscreen: "Sair do ecrã inteiro",
+    toastSpeaking: "A reproduzir texto...",
+    toastExported: "Imagem exportada!",
+    settingDarkMode: "Tema escuro",
+    settingSoundFeedback: "Feedback sonoro",
+    settingSoundFeedbackHint: "Emitir um som ao detetar/adicionar uma letra.",
+    sessionLabel: "sessão",
+    themeToggle: "Alternar tema"
   }
 };
 
@@ -855,12 +923,19 @@ const state = {
   autoAddConfidence: DEFAULT_SETTINGS.autoAddConfidence,
   cooldownMs: DEFAULT_SETTINGS.cooldownMs,
   detectionSmoothing: DEFAULT_SETTINGS.detectionSmoothing,
+  darkMode: DEFAULT_SETTINGS.darkMode,
+  soundFeedback: DEFAULT_SETTINGS.soundFeedback,
   // Smoothing buffer
   smoothingBuffer: [],
   smoothedLetter: null,
   smoothedConfidence: 0,
   // Settings modal
-  settingsOpen: false
+  settingsOpen: false,
+  // Session timer
+  sessionStartTime: null,
+  sessionTimerInterval: null,
+  // Fullscreen
+  isFullscreen: false
 };
 
 const ui = {
@@ -899,6 +974,17 @@ const ui = {
   btnSpace: document.getElementById("btnSpace"),
   btnClear: document.getElementById("btnClear"),
   btnCopy: document.getElementById("btnCopy"),
+  btnSpeak: document.getElementById("btnSpeak"),
+  btnSpeakText: document.getElementById("btnSpeakText"),
+  btnExportImg: document.getElementById("btnExportImg"),
+  btnExportImgText: document.getElementById("btnExportImgText"),
+  btnCopyText: document.getElementById("btnCopyText"),
+  btnFullscreen: document.getElementById("btnFullscreen"),
+  btnExitFullscreen: document.getElementById("btnExitFullscreen"),
+  btnThemeToggle: document.getElementById("btnThemeToggle"),
+  sessionTimerRow: document.getElementById("sessionTimerRow"),
+  sessionTimerValue: document.getElementById("sessionTimerValue"),
+  sessionTimerLabel: document.getElementById("sessionTimerLabel"),
   sentenceTitle: document.getElementById("sentenceTitle"),
   sentenceText: document.getElementById("sentenceText"),
   sentenceCount: document.getElementById("sentenceCount"),
@@ -949,7 +1035,12 @@ const ui = {
   settingDetectionSmoothingValue: document.getElementById("settingDetectionSmoothingValue"),
   settingDetectionSmoothingLabel: document.getElementById("settingDetectionSmoothingLabel"),
   settingDetectionSmoothingHint: document.getElementById("settingDetectionSmoothingHint"),
-  btnResetSettings: document.getElementById("btnResetSettings")
+  btnResetSettings: document.getElementById("btnResetSettings"),
+  settingDarkMode: document.getElementById("settingDarkMode"),
+  settingDarkModeLabel: document.getElementById("settingDarkModeLabel"),
+  settingSoundFeedback: document.getElementById("settingSoundFeedback"),
+  settingSoundFeedbackLabel: document.getElementById("settingSoundFeedbackLabel"),
+  settingSoundFeedbackHint: document.getElementById("settingSoundFeedbackHint")
 };
 
 const metaDescription = document.querySelector('meta[name="description"]');
@@ -1072,11 +1163,15 @@ function setStatus(mode, key, vars = {}) {
 
 function updateStartButtonLabel() {
   if (state.isStartingCamera) {
-    ui.btnStart.textContent = t("btnStarting");
+    ui.btnStart.innerHTML = `<span class="btn-icon">⏳</span> ${t("btnStarting")}`;
     return;
   }
 
-  ui.btnStart.textContent = state.isRunning ? t("btnStop") : t("btnStart");
+  if (state.isRunning) {
+    ui.btnStart.innerHTML = `<span class="btn-icon">⏹</span> ${t("btnStop")}`;
+  } else {
+    ui.btnStart.innerHTML = `<span class="btn-icon">▶</span> ${t("btnStart")}`;
+  }
 }
 
 function showToast(message) {
@@ -1171,13 +1266,29 @@ function addLetterToSentence(letter, confidence = state.confidence, source = "ma
   addToHistory(letter);
 
   if (source === "auto") {
+    playAutoAddSound();
     showToastKey("toastAutoAdded", { letter });
+  } else {
+    playDetectionSound();
+  }
+
+  // Confetti on every 10th letter or on first space (word completed)
+  if (state.totalDetections > 0 && state.totalDetections % 10 === 0) {
+    spawnConfetti();
   }
 }
 
 function addSpaceToSentence() {
+  // Check if a word was just completed (non-empty text before adding space)
+  const trimmed = state.sentence.trim();
+  const hasWord = trimmed.length > 0 && !trimmed.endsWith(" ");
+  
   state.sentence += " ";
   updateSentenceDisplay();
+  
+  if (hasWord && trimmed.split(/\s+/).length >= 1) {
+    playTone(523, 100, "sine");
+  }
 }
 
 function removeLastChar() {
@@ -1230,6 +1341,8 @@ function syncActionButtons() {
   ui.btnBackspace.disabled = !hasText;
   ui.btnClear.disabled = !hasText;
   ui.btnCopy.disabled = !hasText;
+  ui.btnSpeak.disabled = !hasText;
+  ui.btnExportImg.disabled = !hasText;
 }
 
 function getReferenceDescription(letter) {
@@ -1910,6 +2023,7 @@ async function startCamera() {
     ui.detectedDisplay.hidden = false;
 
     setStatus("live", "statusLive");
+    startSessionTimer();
 
     ui.btnStart.disabled = false;
     updateStartButtonLabel();
@@ -1961,6 +2075,11 @@ function stopCamera() {
   clearDetectedDisplay();
   setStatus("off", "statusReady");
   syncActionButtons();
+  stopSessionTimer();
+
+  if (state.isFullscreen) {
+    exitFullscreen();
+  }
 
   ctx.clearRect(0, 0, ui.canvas.width, ui.canvas.height);
 }
@@ -2034,11 +2153,15 @@ function applyTranslations() {
 
   ui.controlsGroup.setAttribute("aria-label", t("controlsAriaLabel"));
 
-  ui.btnAdd.textContent = t("btnAdd");
-  ui.btnBackspace.textContent = t("btnBackspace");
-  ui.btnSpace.textContent = t("btnSpace");
-  ui.btnClear.textContent = t("btnClear");
-  ui.btnCopy.textContent = t("btnCopy");
+  ui.btnAdd.innerHTML = `<span class="btn-icon">➕</span> ${t("btnAdd")}`;
+  ui.btnBackspace.innerHTML = `<span class="btn-icon">⌫</span> ${t("btnBackspace")}`;
+  ui.btnSpace.innerHTML = `<span class="btn-icon">⎵</span> ${t("btnSpace")}`;
+  ui.btnClear.innerHTML = `<span class="btn-icon">🗑️</span> ${t("btnClear")}`;
+  ui.btnCopyText.textContent = t("btnCopy");
+  ui.btnSpeakText.textContent = t("btnSpeak");
+  ui.btnExportImgText.textContent = t("btnExportImg");
+  ui.btnFullscreen.innerHTML = `<span class="btn-icon">⛶</span> ${t("btnFullscreen")}`;
+  ui.btnExitFullscreen.innerHTML = `<span class="btn-icon">✕</span> ${t("btnExitFullscreen")}`;
   updateStartButtonLabel();
 
   ui.sentenceTitle.textContent = t("sentenceTitle");
@@ -2077,6 +2200,12 @@ function applyTranslations() {
   ui.btnResetSettings.textContent = t("settingReset");
   ui.btnSettings.setAttribute("title", t("settingsTitle"));
   ui.btnSettings.setAttribute("aria-label", t("settingsTitle"));
+  ui.btnThemeToggle.setAttribute("title", t("themeToggle"));
+  ui.btnThemeToggle.setAttribute("aria-label", t("themeToggle"));
+  if (ui.settingDarkModeLabel) ui.settingDarkModeLabel.textContent = t("settingDarkMode");
+  if (ui.settingSoundFeedbackLabel) ui.settingSoundFeedbackLabel.textContent = t("settingSoundFeedback");
+  if (ui.settingSoundFeedbackHint) ui.settingSoundFeedbackHint.textContent = t("settingSoundFeedbackHint");
+  if (ui.sessionTimerLabel) ui.sessionTimerLabel.textContent = t("sessionLabel");
 
   updateModeNote();
   updateSentenceDisplay();
@@ -2153,7 +2282,9 @@ function saveSettings() {
       minConfidence: state.minConfidence,
       autoAddConfidence: state.autoAddConfidence,
       cooldownMs: state.cooldownMs,
-      detectionSmoothing: state.detectionSmoothing
+      detectionSmoothing: state.detectionSmoothing,
+      darkMode: state.darkMode,
+      soundFeedback: state.soundFeedback
     };
     localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
   } catch {
@@ -2167,6 +2298,8 @@ function applySettings(settings) {
   state.autoAddConfidence = settings.autoAddConfidence;
   state.cooldownMs = settings.cooldownMs;
   state.detectionSmoothing = settings.detectionSmoothing;
+  state.darkMode = settings.darkMode ?? DEFAULT_SETTINGS.darkMode;
+  state.soundFeedback = settings.soundFeedback ?? DEFAULT_SETTINGS.soundFeedback;
 
   // Update range inputs
   ui.settingHoldDuration.value = settings.holdDurationMs;
@@ -2174,7 +2307,10 @@ function applySettings(settings) {
   ui.settingAutoAddConfidence.value = Math.round(settings.autoAddConfidence * 100);
   ui.settingCooldown.value = settings.cooldownMs;
   ui.settingDetectionSmoothing.value = settings.detectionSmoothing;
+  ui.settingDarkMode.checked = state.darkMode;
+  ui.settingSoundFeedback.checked = state.soundFeedback;
 
+  applyTheme(state.darkMode);
   renderSettingsValues();
 }
 
@@ -2190,6 +2326,240 @@ function resetSettings() {
   applySettings(DEFAULT_SETTINGS);
   saveSettings();
   showToastKey("settingsReset");
+}
+
+// ─── Theme Management ────────────────────────────────────────
+
+function applyTheme(isDark) {
+  state.darkMode = isDark;
+  document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+  ui.btnThemeToggle.textContent = isDark ? "☀️" : "🌙";
+  ui.settingDarkMode.checked = isDark;
+}
+
+function toggleTheme() {
+  const newDark = !state.darkMode;
+  applyTheme(newDark);
+  saveSettings();
+}
+
+// ─── Sound Feedback ──────────────────────────────────────────
+
+const audioCtx = (() => {
+  try { return new (window.AudioContext || window.webkitAudioContext)(); }
+  catch { return null; }
+})();
+
+function playTone(freq = 880, duration = 80, type = "sine") {
+  if (!state.soundFeedback || !audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration / 1000);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration / 1000);
+  } catch { /* ignore */ }
+}
+
+function playAutoAddSound() { playTone(1046, 120, "sine"); }
+function playDetectionSound() { playTone(660, 60, "triangle"); }
+
+// ─── Text-to-Speech ──────────────────────────────────────────
+
+function speakText() {
+  if (!state.sentence || !window.speechSynthesis) return;
+  const utterance = new SpeechSynthesisUtterance(state.sentence.trim());
+  
+  // Map locale to speech lang
+  const langMap = {
+    "pt-BR": "pt-BR",
+    "pt-PT": "pt-PT",
+    "en": "en-US",
+    "ur": "ur",
+    "zh-CN": "zh-CN",
+    "ja": "ja-JP"
+  };
+  utterance.lang = langMap[state.locale] || state.locale;
+  utterance.rate = 0.9;
+  utterance.pitch = 1;
+
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+  showToastKey("toastSpeaking");
+}
+
+// ─── Export as Image ─────────────────────────────────────────
+
+function exportAsImage() {
+  if (!state.sentence) return;
+
+  const canvas = document.createElement("canvas");
+  const w = 800, h = 400;
+  canvas.width = w;
+  canvas.height = h;
+  const c = canvas.getContext("2d");
+
+  // Background gradient
+  const grad = c.createLinearGradient(0, 0, w, h);
+  if (state.darkMode) {
+    grad.addColorStop(0, "#0b1120");
+    grad.addColorStop(1, "#1e293b");
+  } else {
+    grad.addColorStop(0, "#f0f9ff");
+    grad.addColorStop(1, "#e0f2fe");
+  }
+  c.fillStyle = grad;
+  c.fillRect(0, 0, w, h);
+
+  // Border (manual rounded rect for broader browser support)
+  c.strokeStyle = state.darkMode ? "rgba(34,211,238,0.3)" : "rgba(14,116,144,0.2)";
+  c.lineWidth = 3;
+  const bx = 8, by = 8, bw = w - 16, bh = h - 16, br = 16;
+  c.beginPath();
+  c.moveTo(bx + br, by);
+  c.lineTo(bx + bw - br, by);
+  c.quadraticCurveTo(bx + bw, by, bx + bw, by + br);
+  c.lineTo(bx + bw, by + bh - br);
+  c.quadraticCurveTo(bx + bw, by + bh, bx + bw - br, by + bh);
+  c.lineTo(bx + br, by + bh);
+  c.quadraticCurveTo(bx, by + bh, bx, by + bh - br);
+  c.lineTo(bx, by + br);
+  c.quadraticCurveTo(bx, by, bx + br, by);
+  c.closePath();
+  c.stroke();
+
+  // Logo
+  c.font = "bold 20px 'Sora', sans-serif";
+  c.fillStyle = state.darkMode ? "#22d3ee" : "#0e7490";
+  c.textAlign = "left";
+  c.fillText("Lexis AI", 32, 48);
+
+  // Language badge
+  const lang = getActiveSignLanguage();
+  c.font = "12px 'IBM Plex Mono', monospace";
+  c.fillStyle = state.darkMode ? "#94a3b8" : "#64748b";
+  c.fillText(lang.label, 32, 68);
+
+  // Main text
+  c.font = "bold 36px 'Sora', sans-serif";
+  c.fillStyle = state.darkMode ? "#f1f5f9" : "#0f172a";
+  c.textAlign = "center";
+
+  // Word wrap
+  const words = state.sentence.split("");
+  const maxWidth = w - 80;
+  let line = "";
+  let y = h / 2 - 10;
+  const lines = [];
+  
+  for (const char of words) {
+    const testLine = line + char;
+    if (c.measureText(testLine).width > maxWidth) {
+      lines.push(line);
+      line = char;
+    } else {
+      line = testLine;
+    }
+  }
+  lines.push(line);
+
+  const lineHeight = 46;
+  const startY = y - ((lines.length - 1) / 2) * lineHeight;
+  
+  for (let i = 0; i < lines.length; i++) {
+    c.fillText(lines[i], w / 2, startY + i * lineHeight);
+  }
+
+  // Footer
+  c.font = "11px 'IBM Plex Mono', monospace";
+  c.fillStyle = state.darkMode ? "#64748b" : "#94a3b8";
+  c.textAlign = "center";
+  c.fillText("lexis-ai • sign language recognition", w / 2, h - 28);
+
+  // Download
+  const link = document.createElement("a");
+  link.download = `lexis-ai-${Date.now()}.png`;
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+  showToastKey("toastExported");
+}
+
+// ─── Session Timer ───────────────────────────────────────────
+
+function startSessionTimer() {
+  state.sessionStartTime = Date.now();
+  ui.sessionTimerRow.hidden = false;
+  updateSessionTimer();
+  state.sessionTimerInterval = setInterval(updateSessionTimer, 1000);
+}
+
+function stopSessionTimer() {
+  if (state.sessionTimerInterval) {
+    clearInterval(state.sessionTimerInterval);
+    state.sessionTimerInterval = null;
+  }
+}
+
+function updateSessionTimer() {
+  if (!state.sessionStartTime) return;
+  const elapsed = Math.floor((Date.now() - state.sessionStartTime) / 1000);
+  const mins = Math.floor(elapsed / 60).toString().padStart(2, "0");
+  const secs = (elapsed % 60).toString().padStart(2, "0");
+  ui.sessionTimerValue.textContent = `${mins}:${secs}`;
+}
+
+// ─── Confetti ────────────────────────────────────────────────
+
+function spawnConfetti() {
+  const container = document.createElement("div");
+  container.className = "confetti-container";
+  document.body.appendChild(container);
+
+  const colors = ["#22d3ee", "#f97316", "#4ade80", "#f472b6", "#a78bfa", "#fbbf24"];
+
+  for (let i = 0; i < 40; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = `${Math.random() * 0.8}s`;
+    piece.style.animationDuration = `${1.5 + Math.random() * 1.5}s`;
+    piece.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+    piece.style.width = `${6 + Math.random() * 6}px`;
+    piece.style.height = `${8 + Math.random() * 8}px`;
+    container.appendChild(piece);
+  }
+
+  setTimeout(() => container.remove(), 3500);
+}
+
+// ─── Fullscreen Mode ─────────────────────────────────────────
+
+function enterFullscreen() {
+  const card = document.querySelector(".camera-card");
+  card.classList.add("fullscreen-mode");
+  state.isFullscreen = true;
+  document.body.style.overflow = "hidden";
+}
+
+function exitFullscreen() {
+  const card = document.querySelector(".camera-card");
+  card.classList.remove("fullscreen-mode");
+  state.isFullscreen = false;
+  document.body.style.overflow = "";
+}
+
+function toggleFullscreen() {
+  if (state.isFullscreen) {
+    exitFullscreen();
+  } else {
+    enterFullscreen();
+  }
 }
 
 function openSettings() {
@@ -2248,6 +2618,19 @@ function bindSettingsEvents() {
 
   ui.btnResetSettings.addEventListener("click", resetSettings);
 
+  // Dark mode toggle
+  ui.settingDarkMode.addEventListener("change", (e) => {
+    applyTheme(e.target.checked);
+    saveSettings();
+  });
+
+  // Sound feedback toggle
+  ui.settingSoundFeedback.addEventListener("change", (e) => {
+    state.soundFeedback = e.target.checked;
+    saveSettings();
+    if (e.target.checked) playDetectionSound();
+  });
+
   // Close on Escape
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && state.settingsOpen) {
@@ -2267,12 +2650,22 @@ function bindEvents() {
   ui.btnSpace.addEventListener("click", addSpaceToSentence);
   ui.btnClear.addEventListener("click", clearSentence);
   ui.btnCopy.addEventListener("click", copySentence);
+  ui.btnSpeak.addEventListener("click", speakText);
+  ui.btnExportImg.addEventListener("click", exportAsImage);
+  ui.btnFullscreen.addEventListener("click", toggleFullscreen);
+  ui.btnExitFullscreen.addEventListener("click", exitFullscreen);
+  ui.btnThemeToggle.addEventListener("click", toggleTheme);
 
   ui.signLanguageSelect.addEventListener("change", (event) => {
     applySignLanguage(event.target.value);
   });
 
   window.addEventListener("keydown", handleHotkeys);
+
+  // Also close fullscreen on Escape
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && state.isFullscreen) exitFullscreen();
+  });
 }
 
 function init() {
@@ -2283,6 +2676,12 @@ function init() {
 
   // Load saved settings
   const storedSettings = readStoredSettings();
+  
+  // Auto-detect system dark mode preference on first run
+  if (!localStorage.getItem(SETTINGS_STORAGE_KEY)) {
+    storedSettings.darkMode = window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
+  }
+  
   applySettings(storedSettings);
 
   bindEvents();
