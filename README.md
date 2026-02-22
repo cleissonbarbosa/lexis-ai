@@ -1,6 +1,18 @@
-# Lexis AI
 
-Lexis AI recognizes the manual sign alphabet in real time, running entirely in the browser with MediaPipe Hands.
+<!--
+  Lexis AI - Real-time Manual Sign Alphabet Recognition in the Browser
+  Repository: https://github.com/cleissonbarbosa/lexis-ai
+-->
+
+<span align="center" style="display: block; margin-top: 20px;">
+  <img src="assets/img/logo-full.png" alt="Lexis AI Logo" width="250" />
+  
+  [![GitHub license](https://img.shields.io/github/license/cleissonbarbosa/lexis-ai)](https://github.com/cleissonbarbosa/lexis-ai/blob/main/LICENSE) [![GitHub issues](https://img.shields.io/github/issues/cleissonbarbosa/lexis-ai)](https://github.com/cleissonbarbosa/lexis-ai/issues) [![GitHub stars](https://img.shields.io/github/stars/cleissonbarbosa/lexis-ai)](https://github.com/cleissonbarbosa/lexis-ai/stargazers)
+
+<div>Lexis AI recognizes the manual sign alphabet in real time, running entirely in the browser with MediaPipe Hands.</div>
+</span>
+
+--- 
 
 ## Highlights
 
