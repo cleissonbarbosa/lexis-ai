@@ -2,11 +2,12 @@
   Lexis AI - Real-time Manual Sign Alphabet Recognition in the Browser
   Repository: https://github.com/cleissonbarbosa/lexis-ai
 -->
+# Lexis AI
 
 <p align="center" style="display: block; margin-top: 20px;">
     <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/main/assets/img/logo-hand-only.svg" width="150" alt="Lexis AI Logo">
-        <img src="https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/main/assets/img/logo-full.png" alt="Lexis AI Logo" width="250" />
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/refs/heads/main/assets/img/logo-hand-only-dark-mode.svg" width="150" alt="Lexis AI Logo">
+        <img src="https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/refs/heads/main/assets/img/logo-hand-only.svg" alt="Lexis AI Logo" width="250" />
     </picture>
 </p>
 
