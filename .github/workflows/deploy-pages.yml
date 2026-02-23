@@ -29,6 +29,48 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install minification tools
+        run: npm install --no-save esbuild csso-cli html-minifier-terser
+
+      - name: Bundle & minify JavaScript
+        run: |
+          npx esbuild assets/js/app.js \
+            --bundle \
+            --minify \
+            --format=esm \
+            --target=es2020 \
+            --outfile=assets/js/app.min.js
+          mv assets/js/app.min.js assets/js/app.js
+
+      - name: Minify CSS
+        run: |
+          npx csso assets/css/main.css --output assets/css/main.min.css
+          mv assets/css/main.min.css assets/css/main.css
+
+      - name: Minify HTML
+        run: |
+          npx html-minifier-terser \
+            --collapse-whitespace \
+            --remove-comments \
+            --remove-redundant-attributes \
+            --remove-script-type-attributes \
+            --minify-css true \
+            --minify-js true \
+            --minify-urls true \
+            -o index.min.html \
+            index.html
+          mv index.min.html index.html
+
+      - name: Clean up build artifacts
+        run: |
+          rm -rf node_modules package.json package-lock.json
+          rm -rf assets/js/core assets/js/data assets/js/utils
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
