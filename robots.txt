@@ -1,0 +1,15 @@
+# Lexis AI — robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cleissonbarbosa.github.io/lexis-ai/sitemap.xml
+
+# Assets (allow crawling for rich results)
+Allow: /assets/img/
+Allow: /assets/icons/
+
+# Block unnecessary files
+Disallow: /assets/js/
+Disallow: /assets/css/
+Disallow: /scripts/

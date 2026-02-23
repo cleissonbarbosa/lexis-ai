@@ -435,6 +435,15 @@ kbd {
 /* ─── Footer ─────────────────────────────────────────────────── */
 .site-footer { padding: 18px 0 30px; }
 .site-footer p { margin: 0; font-size: 0.8rem; color: var(--ink-muted); text-align: center; }
+.footer-links {
+  display: flex; justify-content: center; gap: 16px;
+  margin-top: 8px; font-size: 0.78rem;
+}
+.footer-links a {
+  color: var(--brand); text-decoration: none;
+  transition: color var(--anim), opacity var(--anim);
+}
+.footer-links a:hover { opacity: 0.8; text-decoration: underline; }
 
 /* ─── Toast ──────────────────────────────────────────────────── */
 .toast {
