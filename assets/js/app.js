@@ -19,6 +19,13 @@ import { createSettingsController } from "./core/settings.js";
 import { SIGN_GESTURES } from "./data/sign-gestures.js";
 import { I18N } from "./data/i18n.js";
 
+// ─── Lucide Icons Helper ──────────────────────────────────────
+function refreshIcons() {
+  if (typeof lucide !== "undefined") {
+    lucide.createIcons();
+  }
+}
+
 const state = createInitialState(DEFAULT_SETTINGS);
 
 const ui = getUIRefs(document);
@@ -152,15 +159,17 @@ function setStatus(mode, key, vars = {}) {
 
 function updateStartButtonLabel() {
   if (state.isStartingCamera) {
-    ui.btnStart.innerHTML = `<span class="btn-icon">⏳</span> ${t("btnStarting")}`;
+    ui.btnStart.innerHTML = `<span class="btn-icon"><i data-lucide="loader" class="lucide-icon lucide-spin"></i></span> ${t("btnStarting")}`;
+    refreshIcons();
     return;
   }
 
   if (state.isRunning) {
-    ui.btnStart.innerHTML = `<span class="btn-icon">⏹</span> ${t("btnStop")}`;
+    ui.btnStart.innerHTML = `<span class="btn-icon"><i data-lucide="square" class="lucide-icon"></i></span> ${t("btnStop")}`;
   } else {
-    ui.btnStart.innerHTML = `<span class="btn-icon">▶</span> ${t("btnStart")}`;
+    ui.btnStart.innerHTML = `<span class="btn-icon"><i data-lucide="play" class="lucide-icon"></i></span> ${t("btnStart")}`;
   }
+  refreshIcons();
 }
 
 function showToast(message) {
@@ -758,16 +767,17 @@ function applyTranslations() {
 
   ui.controlsGroup.setAttribute("aria-label", t("controlsAriaLabel"));
 
-  ui.btnAdd.innerHTML = `<span class="btn-icon">➕</span> ${t("btnAdd")}`;
-  ui.btnBackspace.innerHTML = `<span class="btn-icon">⌫</span> ${t("btnBackspace")}`;
-  ui.btnSpace.innerHTML = `<span class="btn-icon">⎵</span> ${t("btnSpace")}`;
-  ui.btnClear.innerHTML = `<span class="btn-icon">🗑️</span> ${t("btnClear")}`;
+  ui.btnAdd.innerHTML = `<span class="btn-icon"><i data-lucide="plus" class="lucide-icon"></i></span> ${t("btnAdd")}`;
+  ui.btnBackspace.innerHTML = `<span class="btn-icon"><i data-lucide="delete" class="lucide-icon"></i></span> ${t("btnBackspace")}`;
+  ui.btnSpace.innerHTML = `<span class="btn-icon"><i data-lucide="space" class="lucide-icon"></i></span> ${t("btnSpace")}`;
+  ui.btnClear.innerHTML = `<span class="btn-icon"><i data-lucide="trash-2" class="lucide-icon"></i></span> ${t("btnClear")}`;
   ui.btnCopyText.textContent = t("btnCopy");
   ui.btnSpeakText.textContent = t("btnSpeak");
   ui.btnExportImgText.textContent = t("btnExportImg");
-  ui.btnFullscreen.innerHTML = `<span class="btn-icon">⛶</span> ${t("btnFullscreen")}`;
-  ui.btnExitFullscreen.innerHTML = `<span class="btn-icon">✕</span> ${t("btnExitFullscreen")}`;
+  ui.btnFullscreen.innerHTML = `<span class="btn-icon"><i data-lucide="maximize" class="lucide-icon"></i></span> ${t("btnFullscreen")}`;
+  ui.btnExitFullscreen.innerHTML = `<span class="btn-icon"><i data-lucide="x" class="lucide-icon"></i></span> ${t("btnExitFullscreen")}`;
   updateStartButtonLabel();
+  refreshIcons();
 
   ui.sentenceTitle.textContent = t("sentenceTitle");
   ui.shortcutHint.innerHTML = t("shortcutHint");
@@ -916,7 +926,10 @@ function bindSettingsEvents() {
 function applyTheme(isDark) {
   state.darkMode = isDark;
   document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-  ui.btnThemeToggle.textContent = isDark ? "☀️" : "🌙";
+  ui.btnThemeToggle.innerHTML = isDark
+    ? '<i data-lucide="sun" class="lucide-icon"></i>'
+    : '<i data-lucide="moon" class="lucide-icon"></i>';
+  refreshIcons();
   ui.settingDarkMode.checked = isDark;
 }
 
@@ -974,6 +987,7 @@ function init() {
 
   bindEvents();
   bindSettingsEvents();
+  refreshIcons();
   initMediaPipe();
 }
 

@@ -62,7 +62,8 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="./assets/css/main.css">
 
-  <!-- Structured Data (JSON-LD) -->
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -107,9 +108,6 @@
     <p class="loading-status" id="loadStatus">Inicializando...</p>
   </div>
 
-  <div class="bg-orb orb-a" aria-hidden="true"></div>
-  <div class="bg-orb orb-b" aria-hidden="true"></div>
-
   <header class="site-header reveal">
     <div class="brand">
       <img class="brand-icon" src="./assets/img/logo.png" alt="Lexis AI — Reconhecimento de língua de sinais" width="60" height="52">
@@ -119,8 +117,8 @@
       </div>
     </div>
     <div class="top-badges">
-      <button class="icon-btn" id="btnThemeToggle" title="Alternar tema" aria-label="Alternar tema claro/escuro">🌙</button>
-      <button class="icon-btn badge-settings" id="btnSettings" title="Configurações" aria-label="Abrir configurações">⚙️</button>
+      <button class="icon-btn" id="btnThemeToggle" title="Alternar tema" aria-label="Alternar tema claro/escuro"><i data-lucide="moon" class="lucide-icon"></i></button>
+      <button class="icon-btn badge-settings" id="btnSettings" title="Configurações" aria-label="Abrir configurações"><i data-lucide="settings" class="lucide-icon"></i></button>
     </div>
   </header>
 
@@ -142,7 +140,7 @@
 
         <div class="camera-wrapper" id="cameraWrapper">
           <div class="camera-placeholder" id="placeholder">
-            <div class="camera-placeholder-icon" aria-hidden="true">📷</div>
+            <div class="camera-placeholder-icon" aria-hidden="true"><i data-lucide="camera" class="lucide-icon lucide-xl"></i></div>
             <p id="cameraPlaceholderText">Clique em <strong>Iniciar câmera</strong> para começar o reconhecimento.</p>
           </div>
 
@@ -174,16 +172,16 @@
 
         <div class="fullscreen-bar">
           <span style="font-weight:700; font-size:0.95rem;" id="fullscreenTitle">Modo Tela Cheia</span>
-          <button class="btn btn-small" id="btnExitFullscreen"><span class="btn-icon">✕</span> Sair</button>
+          <button class="btn btn-small" id="btnExitFullscreen"><span class="btn-icon"><i data-lucide="x" class="lucide-icon"></i></span> Sair</button>
         </div>
 
         <div class="controls" role="group" id="controlsGroup" aria-label="Controles de reconhecimento">
-          <button class="btn btn-primary" id="btnStart"><span class="btn-icon">▶</span> Iniciar câmera</button>
-          <button class="btn" id="btnAdd" disabled><span class="btn-icon">➕</span> Adicionar letra</button>
-          <button class="btn" id="btnBackspace" disabled><span class="btn-icon">⌫</span> Apagar</button>
-          <button class="btn" id="btnSpace" disabled><span class="btn-icon">⎵</span> Espaço</button>
-          <button class="btn btn-danger" id="btnClear" disabled><span class="btn-icon">🗑️</span> Limpar</button>
-          <button class="btn btn-accent" id="btnFullscreen" title="Tela cheia"><span class="btn-icon">⛶</span> Tela cheia</button>
+          <button class="btn btn-primary" id="btnStart"><span class="btn-icon"><i data-lucide="play" class="lucide-icon"></i></span> Iniciar câmera</button>
+          <button class="btn" id="btnAdd" disabled><span class="btn-icon"><i data-lucide="plus" class="lucide-icon"></i></span> Adicionar letra</button>
+          <button class="btn" id="btnBackspace" disabled><span class="btn-icon"><i data-lucide="delete" class="lucide-icon"></i></span> Apagar</button>
+          <button class="btn" id="btnSpace" disabled><span class="btn-icon"><i data-lucide="space" class="lucide-icon"></i></span> Espaço</button>
+          <button class="btn btn-danger" id="btnClear" disabled><span class="btn-icon"><i data-lucide="trash-2" class="lucide-icon"></i></span> Limpar</button>
+          <button class="btn btn-accent" id="btnFullscreen" title="Tela cheia"><span class="btn-icon"><i data-lucide="maximize" class="lucide-icon"></i></span> Tela cheia</button>
         </div>
 
         <div class="sentence-box">
@@ -193,9 +191,9 @@
           </div>
           <p class="sentence-text" id="sentenceText" aria-live="polite"><span class="cursor"></span></p>
           <div class="sentence-actions">
-            <button class="btn btn-small btn-success" id="btnCopy" disabled><span class="btn-icon">📋</span> <span id="btnCopyText">Copiar</span></button>
-            <button class="btn btn-small" id="btnSpeak" disabled><span class="btn-icon">🔊</span> <span id="btnSpeakText">Falar</span></button>
-            <button class="btn btn-small btn-accent" id="btnExportImg" disabled><span class="btn-icon">🖼️</span> <span id="btnExportImgText">Exportar imagem</span></button>
+            <button class="btn btn-small btn-success" id="btnCopy" disabled><span class="btn-icon"><i data-lucide="clipboard" class="lucide-icon"></i></span> <span id="btnCopyText">Copiar</span></button>
+            <button class="btn btn-small" id="btnSpeak" disabled><span class="btn-icon"><i data-lucide="volume-2" class="lucide-icon"></i></span> <span id="btnSpeakText">Falar</span></button>
+            <button class="btn btn-small btn-accent" id="btnExportImg" disabled><span class="btn-icon"><i data-lucide="image" class="lucide-icon"></i></span> <span id="btnExportImgText">Exportar imagem</span></button>
           </div>
           <p class="hint" id="shortcutHint">Atalhos: <kbd>Enter</kbd> iniciar/parar, <kbd>+</kbd> adicionar, <kbd>Backspace</kbd> apagar.</p>
         </div>
@@ -217,7 +215,7 @@
         </div>
         <div class="session-timer-row" id="sessionTimerRow" hidden>
           <div class="session-timer-box">
-            <span class="session-timer-icon">⏱️</span>
+            <span class="session-timer-icon"><i data-lucide="timer" class="lucide-icon"></i></span>
             <span class="session-timer-value" id="sessionTimerValue">00:00</span>
             <span class="session-timer-label" id="sessionTimerLabel">sessão</span>
           </div>
@@ -353,6 +351,7 @@
     </div>
   </div>
 
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1640029074/camera_utils.js" crossorigin="anonymous"></script>
   <script type="module" src="./assets/js/app.js"></script>
