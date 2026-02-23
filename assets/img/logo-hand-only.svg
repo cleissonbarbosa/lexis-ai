@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="143.5051 66.7823 138.3878 180.88" width="138.388px" height="180.88px" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <style bx:fonts="Montserrat">@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&amp;display=swap");</style>
+    <style>.text-dark { font-family: Montserrat, sans-serif; font-weight: 800; font-size: 56px; fill: rgb(15, 23, 42); letter-spacing: -1.5px; }.text-light { font-family: Montserrat, sans-serif; font-weight: 700; font-size: 56px; fill: rgb(43, 159, 237); }</style>
+  </defs>
+  <g transform="matrix(0.13333298, 0, -0.000313, -0.13333398, -894.66156066, -794.54388632)" fill="#000000" stroke="none" style="transform-origin: 1107.36px 951.766px;">
+    <title>mão</title>
+    <path d="M1008 1603 c-40 -42 -42 -69 -14 -202 34 -159 34 -155 -9 -147 -42 8 -87 -14 -104 -51 -9 -20 -16 -23 -34 -16 -61 21 -127 -16 -127 -70 0 -20 -4 -22 -46 -19 -60 5 -84 -15 -84 -74 0 -24 9 -66 20 -94 15 -37 20 -74 20 -139 0 -132 22 -232 73 -332 35 -68 42 -90 35 -109 -5 -13 -7 -31 -5 -39 3 -11 8 -5 16 15 10 25 17 31 33 26 23 -6 24 -8 -19 61 -76 122 -113 244 -113 375 l0 54 45 -46 c35 -37 51 -46 78 -46 18 0 38 5 45 12 8 8 15 8 26 -2 25 -20 81 -4 109 31 22 28 26 30 45 18 36 -22 73 -1 96 54 18 43 19 53 6 129 -7 45 -22 109 -32 142 -11 34 -25 102 -33 151 -8 50 -19 126 -26 170 -14 94 -8 131 26 147 37 17 72 -4 95 -55 22 -49 74 -395 88 -579 7 -91 13 -122 27 -138 30 -34 54 -24 125 50 66 69 68 70 118 70 40 0 57 -5 81 -26 57 -48 44 -72 -100 -195 -42 -36 -69 -74 -121 -166 -72 -128 -113 -173 -175 -193 -55 -18 -63 -30 -20 -30 25 0 37 -5 37 -14 0 -17 39 -66 40 -49 0 7 -5 23 -11 37 -11 23 -8 29 43 75 42 39 69 77 113 162 48 90 69 119 114 157 128 107 154 149 125 203 -23 45 -62 69 -111 69 -59 0 -113 -29 -164 -90 -71 -84 -86 -67 -99 119 -8 114 -17 181 -61 456 -6 39 -17 84 -24 101 -27 67 -101 85 -147 37z m2 -395 c37 -40 76 -212 67 -301 -5 -57 -32 -89 -68 -80 -24 7 -29 18 -57 136 -12 49 -33 115 -48 148 l-27 60 28 29 c35 36 76 39 105 8z m-159 -59 c39 -39 99 -216 99 -292 0 -43 -35 -87 -70 -87 -28 0 -60 35 -60 68 -1 63 -44 196 -77 233 -10 12 -11 23 -4 41 22 58 73 76 112 37z m-123 -92 c26 -28 55 -109 71 -200 13 -75 10 -87 -21 -87 -44 0 -146 149 -164 240 -13 63 68 97 114 47z" style="fill: rgb(14, 116, 144);"/>
+    <path d="M1001 699 c-30 -11 -83 -23 -118 -26 -67 -6 -69 -23 -3 -23 31 0 194 51 208 65 11 11 -36 2 -87 -16z" style="fill: rgb(14, 116, 144);"/>
+    <path d="M1114 691 c-42 -31 -87 -103 -99 -158 -11 -55 10 -37 29 24 14 44 31 69 73 110 60 59 58 69 -3 24z" style="fill: rgb(14, 116, 144);"/>
+  </g>
+  <g transform="matrix(1, 0, 0, 1, 24.14192771911621, 107.47132873535155)">
+    <line x1="180.817" y1="-35.736" x2="191.073" y2="10.217" stroke-width="1.5" style="stroke-width: 1.5; stroke: rgb(65, 188, 222);"/>
+    <circle cx="180.817" cy="-35.736" r="3" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <circle cx="168.827" cy="20.934" r="3" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <line x1="141.488" y1="71.792" x2="162.755" y2="67.817" stroke-width="1.5" style="stroke-width: 1.5; stroke: rgb(65, 188, 222);"/>
+    <line x1="153.983" y1="36.388" x2="169.584" y2="19.874" stroke-width="1.5" style="stroke-width: 1.5; stroke: rgb(65, 188, 222);"/>
+    <line x1="153.207" y1="37.457" x2="163.207" y2="67.457" stroke-width="1" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <line x1="169.886" y1="20.328" x2="179.578" y2="66.695" stroke-width="1" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <line x1="162.596" y1="67.738" x2="179.927" y2="66.628" stroke-width="1.5" style="stroke-width: 1.5; stroke: rgb(65, 188, 222);"/>
+    <circle cx="162.298" cy="67.76" r="2.5" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <line x1="178.629" y1="69.576" x2="178.629" y2="132.053" stroke-width="1.5" style="stroke-width: 1.5; stroke: rgb(15, 117, 144);"/>
+    <line x1="195.539" y1="48.543" x2="190.825" y2="9.006" stroke-width="1.5" style="stroke-width: 1.5; transform-box: fill-box; transform-origin: 50% 50%; stroke: rgb(65, 188, 222);" transform="matrix(-1, 0, 0, -1, -0.00003, 0.000004)"/>
+    <line x1="199.444" y1="83.779" x2="195.927" y2="133.264" stroke-width="1.5" style="stroke-width: 1.5; stroke: rgb(15, 117, 144);"/>
+    <circle cx="180.817" cy="-35.736" r="3" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <circle cx="191.14" cy="8.999" r="3" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <circle cx="168.978" cy="20.934" r="3" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <line x1="195.461" y1="49.699" x2="198.675" y2="82.414" stroke-width="1.5" style="stroke-width: 1.5; stroke: rgb(65, 188, 222);"/>
+    <line x1="200.037" y1="83.322" x2="242.889" y2="58.961" stroke-width="1.5" style="stroke-width: 1.5; stroke: rgb(65, 188, 222);"/>
+    <circle cx="217.308" cy="73.946" r="3" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <circle cx="195.664" cy="49.525" r="3" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <circle cx="199.583" cy="83.625" r="3" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <circle cx="243.495" cy="58.81" r="3" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <line x1="130.35" y1="39.577" x2="153.075" y2="37.297" stroke-width="1.5" style="stroke-width: 1.5; stroke: rgb(65, 188, 222);"/>
+    <line x1="130.35" y1="40.182" x2="140.35" y2="70.182" stroke-width="1" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <circle cx="129.442" cy="39.728" r="2.5" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <circle cx="153.074" cy="36.842" r="2.5" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <circle cx="141.41" cy="71.847" r="2.5" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <circle cx="179.427" cy="66.998" r="2.5" fill="#bfdbfe" style="stroke-width: 1; stroke: rgb(65, 188, 222);"/>
+    <line x1="146.859" y1="75.934" x2="146.859" y2="133.415" stroke-width="1.5" style="stroke-width: 1.5; fill: rgb(36, 99, 234); stroke: rgb(15, 117, 144);"/>
+    <line x1="161.221" y1="75.329" x2="161.221" y2="129.329" stroke-width="1.5" style="stroke-width: 1.5; stroke: rgb(15, 117, 144);"/>
+  </g>
+</svg>

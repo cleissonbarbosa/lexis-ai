@@ -98,6 +98,8 @@
 [data-theme="dark"] .badge-off { color: #94a3b8; }
 [data-theme="dark"] .toggle-slider { background: #404050; }
 [data-theme="dark"] .session-timer-box { background: #262630; }
+[data-theme="dark"] .brand-icon { display: none; }
+[data-theme="dark"] .brand-icon-dark { display: inline-block; }
 
 /* ─── Base ───────────────────────────────────────────────────── */
 * { box-sizing: border-box; }
@@ -187,12 +189,13 @@ body::before {
   align-items: center; padding: 28px 0 12px;
 }
 .brand { display: flex; align-items: center; gap: 14px; }
-.brand-icon {
+.brand-icon, .brand-icon-dark {
   width: 60px; height: 52px; border-radius: 12px;
   color: #fff; display: flex; align-items: center; justify-content: center;
   transition: transform var(--anim);
 }
-.brand-icon:hover { transform: scale(1.04); }
+.brand-icon-dark { display: none; }
+.brand-icon:hover, .brand-icon-dark:hover { transform: scale(1.04); }
 .brand-name {
   margin: 0; font-size: clamp(1.25rem, 1.3vw + 0.9rem, 1.8rem);
   letter-spacing: -0.03em; font-weight: 800;
@@ -663,7 +666,7 @@ kbd {
     padding: 18px 0 10px;
   }
   .brand { gap: 10px; }
-  .brand-icon { width: 44px; height: 38px; border-radius: 10px; }
+  .brand-icon, .brand-icon-dark { width: 44px; height: 38px; border-radius: 10px; }
   .brand-name { font-size: 1.15rem; }
   .brand-tagline { font-size: 0.78rem; }
   .top-badges { gap: 6px; }
@@ -726,7 +729,7 @@ kbd {
     gap: 8px;
   }
   .brand { gap: 8px; }
-  .brand-icon { width: 36px; height: 32px; border-radius: 8px; }
+  .brand-icon, .brand-icon-dark { width: 36px; height: 32px; border-radius: 8px; }
   .brand-name { font-size: 1.05rem; }
   .brand-tagline { font-size: 0.72rem; margin-top: 1px; }
   .icon-btn { width: 38px; height: 38px; font-size: 0.9rem; }
@@ -928,7 +931,7 @@ kbd {
   }
   .brand-name { font-size: 0.95rem; }
   .brand-tagline { font-size: 0.68rem; }
-  .brand-icon { width: 32px; height: 28px; }
+  .brand-icon, .brand-icon-dark { width: 32px; height: 28px; }
 
   .camera-card { padding: 8px; }
   .card-head h2 { font-size: 0.85rem; }

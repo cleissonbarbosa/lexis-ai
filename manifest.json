@@ -13,7 +13,7 @@
   "categories": ["utilities", "education", "accessibility"],
   "icons": [
     {
-      "src": "./assets/img/logo.png",
+      "src": "./assets/img/logo.svg",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
