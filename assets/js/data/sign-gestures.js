@@ -1,4 +1,4 @@
-const LIBRAS_SVG = (letter) => `assets/icons/libras/svg/${letter.toLowerCase()}.svg`;
+const LIBRAS_SVG = (letter) => `assets/icons/libras/${letter.toLowerCase()}.svg`;
 
 export const SIGN_GESTURES = {
   libras: {
