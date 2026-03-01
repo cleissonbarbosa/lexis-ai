@@ -16,6 +16,7 @@ import { createSessionController } from "./core/session.js";
 import { createFullscreenController } from "./core/fullscreen.js";
 import { createTextOutputController } from "./core/text-output.js";
 import { createSettingsController } from "./core/settings.js";
+import { createGestureController } from "./core/gestures.js";
 import { SIGN_GESTURES } from "./data/sign-gestures.js";
 import { I18N } from "./data/i18n.js";
 
@@ -977,16 +978,21 @@ function init() {
 
   // Load saved settings
   const storedSettings = readStoredSettings();
-  
+
   // Auto-detect system dark mode preference on first run
   if (!localStorage.getItem(SETTINGS_STORAGE_KEY)) {
     storedSettings.darkMode = window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
   }
-  
+
   applySettings(storedSettings);
 
   bindEvents();
   bindSettingsEvents();
+
+  // Initialize mobile gestures
+  const gestureController = createGestureController(ui);
+  gestureController.init();
+
   refreshIcons();
   initMediaPipe();
 }
