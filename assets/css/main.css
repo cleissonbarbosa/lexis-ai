@@ -235,14 +235,14 @@ html[lang="ur"] body { font-family: "Noto Naskh Arabic", "Sora", sans-serif; }
   background: var(--surface); border: 1px solid var(--line);
   border-radius: var(--radius-xl); box-shadow: var(--shadow-soft);
   overflow: hidden;
-  transition: border-color var(--anim), box-shadow var(--anim), background var(--anim);
+  transition: border-color var(--anim), box-shadow var(--anim), background var(--anim), transform var(--anim);
   position: relative;
 }
-.card:hover { border-color: var(--line-strong); box-shadow: var(--shadow); }
+.card:hover { border-color: var(--line-strong); box-shadow: var(--shadow); transform: translateY(-1px); }
 .camera-card { padding: 22px; }
 .card-head { margin-bottom: 16px; }
-.card-head h2 { margin: 0; font-size: 1.08rem; display: flex; align-items: center; gap: 8px; }
-.card-head p { margin: 6px 0 0; color: var(--ink-muted); font-size: 0.9rem; }
+.card-head h2 { margin: 0; font-size: 1.08rem; display: flex; align-items: center; gap: 8px; font-weight: 700; }
+.card-head p { margin: 6px 0 0; color: var(--ink-muted); font-size: 0.9rem; line-height: 1.45; }
 
 /* ─── Sign Language Selector ─────────────────────────────────── */
 .mode-switcher { margin-bottom: 14px; display: grid; gap: 8px; }
@@ -405,7 +405,7 @@ kbd {
   padding: 14px 12px; background: var(--bg-soft); text-align: center;
   transition: all var(--anim);
 }
-.stat-box:hover { border-color: var(--brand); transform: translateY(-1px); }
+.stat-box:hover { border-color: var(--brand); transform: translateY(-2px); box-shadow: var(--shadow-soft); }
 .stat-value { display: block; font: 800 1.5rem/1 "IBM Plex Mono", monospace; color: var(--brand); }
 .stat-label { display: block; margin-top: 6px; color: var(--ink-muted); font-size: 0.78rem; }
 .session-timer-row { margin-top: 10px; }
@@ -425,14 +425,14 @@ kbd {
   padding: 5px 10px; font: 700 0.84rem/1 "IBM Plex Mono", monospace;
   color: var(--ink-muted); transition: all var(--anim); cursor: default;
 }
-.history-chip:hover { transform: scale(1.03); }
+.history-chip:hover { transform: scale(1.05); box-shadow: var(--shadow-soft); }
 .history-chip.recent {
   color: var(--brand); border-color: rgba(14, 116, 144, 0.4);
-  background: var(--brand-light); animation: chip-pop 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--brand-light); animation: chip-pop 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 @keyframes chip-pop {
-  0% { transform: scale(0.8); opacity: 0.5; }
-  60% { transform: scale(1.1); }
+  0% { transform: scale(0.85); opacity: 0.6; }
+  60% { transform: scale(1.12); }
   100% { transform: scale(1); opacity: 1; }
 }
 .muted { color: var(--ink-muted); font-size: 0.84rem; }
@@ -447,9 +447,10 @@ kbd {
   padding: 4px 2px; /* min-height 44px for touch target (WCAG 2.5.5) */
 }
 .chip-letter { font-size: 0.72rem; line-height: 1; font-weight: 800; color: var(--ink); }
-.chip-icon { width: 28px; height: 28px; object-fit: contain; display: block; pointer-events: none; }
-.letter-chip:hover { transform: translateY(-1px); border-color: var(--brand); box-shadow: var(--shadow-soft); z-index: 1; }
-.letter-chip:active { transform: scale(0.95); }
+.chip-icon { width: 28px; height: 28px; object-fit: contain; display: block; pointer-events: none; transition: transform var(--anim); }
+.letter-chip:hover { transform: translateY(-2px); border-color: var(--brand); box-shadow: var(--shadow-soft); z-index: 1; }
+.letter-chip:hover .chip-icon { transform: scale(1.1); }
+.letter-chip:active { transform: scale(0.96) translateY(0); }
 .letter-chip.active { border-color: var(--brand); color: var(--brand); background: var(--brand-light); box-shadow: var(--shadow-glow); }
 .reference-card {
   margin-top: 12px; border: 1px solid var(--line); border-radius: var(--radius-md);
@@ -591,11 +592,33 @@ kbd {
   contain: layout style paint;
 }
 #loadingOverlay.hidden { opacity: 0; pointer-events: none; visibility: hidden; }
-.loading-logo { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; color: #0f172a; letter-spacing: -0.02em; min-height: 1em; }
+.loading-logo {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  min-height: 1em;
+  animation: pulse-fade 2s ease-in-out infinite;
+}
+@keyframes pulse-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
 .loading-logo span { color: var(--brand); }
 .loading-subtitle { margin: 0; color: var(--ink-muted); font-size: 0.9rem; }
 .loading-bar { width: min(300px, 82vw); height: 6px; border-radius: 999px; background: #dde7f3; overflow: hidden; }
-.loading-fill { width: 0%; height: 100%; background: var(--brand); transition: width 200ms ease; border-radius: 999px; }
+.loading-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--brand) 0%, #22d3ee 100%);
+  transition: width 200ms ease;
+  border-radius: 999px;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0% { background-position: -100% 0; }
+  100% { background-position: 100% 0; }
+}
 .loading-status { margin: 0; color: var(--ink-muted); font-size: 0.82rem; font-family: "IBM Plex Mono", monospace; }
 
 /* ─── Confetti ───────────────────────────────────────────────── */
@@ -1027,15 +1050,25 @@ kbd {
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
-  .btn:hover:not(:disabled) { transform: none; box-shadow: none; }
+  .btn:hover:not(:disabled) { transform: none; box-shadow: none; border-color: var(--line); background: var(--surface-solid); }
   .btn:active:not(:disabled) { transform: scale(0.96); }
-  .letter-chip:hover { transform: none; box-shadow: none; }
-  .letter-chip:active { transform: scale(0.93); }
-  .stat-box:hover { transform: none; }
-  .icon-btn:hover { transform: none; box-shadow: none; }
-  .icon-btn:active { transform: scale(0.92); }
-  .card:hover { border-color: var(--line); box-shadow: var(--shadow-soft); }
-  .history-chip:hover { transform: none; }
+  .btn-primary:hover:not(:disabled) {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(14, 116, 144, 0.2);
+    background: var(--brand);
+    border-color: transparent;
+  }
+  .btn-primary:active:not(:disabled) {
+    transform: scale(0.96);
+    box-shadow: 0 1px 4px rgba(14, 116, 144, 0.15);
+  }
+  .letter-chip:hover { transform: none; box-shadow: none; border-color: var(--line); }
+  .letter-chip:active { transform: scale(0.94); }
+  .stat-box:hover { transform: none; box-shadow: none; }
+  .icon-btn:hover { transform: none; box-shadow: none; border-color: var(--line); background: var(--surface); color: var(--ink-muted); }
+  .icon-btn:active { transform: scale(0.93); }
+  .card:hover { border-color: var(--line); box-shadow: var(--shadow-soft); transform: none; }
+  .history-chip:hover { transform: none; box-shadow: none; }
 
   /* Increase tap targets for touch */
   .letter-chip { min-height: 44px; }
@@ -1045,6 +1078,13 @@ kbd {
 
   /* Prevent double-tap zoom on buttons */
   .btn, .icon-btn, .letter-chip, .modal-close { touch-action: manipulation; }
+
+  /* Prevent text selection on interactive elements */
+  .btn, .icon-btn, .letter-chip, .history-chip, .stat-box, .controls {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 /* Safe area insets for notched phones */
