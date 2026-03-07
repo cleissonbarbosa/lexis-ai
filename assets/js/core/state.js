@@ -36,6 +36,7 @@ export function createInitialState(defaultSettings) {
     settingsOpen: false,
     sessionStartTime: null,
     sessionTimerInterval: null,
-    isFullscreen: false
+    isFullscreen: false,
+    isVideoMode: false
   };
 }

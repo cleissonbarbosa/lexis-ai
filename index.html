@@ -2,7 +2,7 @@
 <html lang="pt-BR" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <!-- Primary SEO Meta Tags -->
   <title>Lexis AI — Reconhecimento de Língua de Sinais em Tempo Real no Navegador</title>
@@ -24,7 +24,7 @@
   <meta property="og:url" content="https://cleissonbarbosa.github.io/lexis-ai/">
   <meta property="og:title" content="Lexis AI — Reconhecimento de Língua de Sinais em Tempo Real">
   <meta property="og:description" content="Reconheça o alfabeto manual de Libras em tempo real usando apenas a câmera do navegador. Sem servidores, 100% privado e gratuito.">
-  <meta property="og:image" content="https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/main/assets/img/logo-full.png">
+  <meta property="og:image" content="https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/main/assets/img/logo.svg">
   <meta property="og:image:alt" content="Lexis AI — Reconhecimento de Língua de Sinais">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -37,7 +37,7 @@
   <meta name="twitter:url" content="https://cleissonbarbosa.github.io/lexis-ai/">
   <meta name="twitter:title" content="Lexis AI — Reconhecimento de Língua de Sinais em Tempo Real">
   <meta name="twitter:description" content="Reconheça o alfabeto manual de Libras em tempo real usando apenas a câmera do navegador. Sem servidores, 100% privado e gratuito.">
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/main/assets/img/logo-full.png">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/main/assets/img/logo.svg">
   <meta name="twitter:image:alt" content="Lexis AI — Reconhecimento de Língua de Sinais">
 
   <!-- PWA / Mobile -->
@@ -87,8 +87,8 @@
       "name": "Cleisson Barbosa",
       "url": "https://github.com/cleissonbarbosa"
     },
-    "image": "https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/main/assets/img/logo-full.png",
-    "screenshot": "https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/main/assets/img/logo-full.png",
+    "image": "https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/main/assets/img/logo.svg",
+    "screenshot": "https://raw.githubusercontent.com/cleissonbarbosa/lexis-ai/main/assets/img/logo.svg",
     "inLanguage": ["pt-BR", "en", "ja", "zh", "ur"],
     "isAccessibleForFree": true,
     "keywords": "Libras, língua de sinais, reconhecimento de gestos, acessibilidade, sign language, ASL, MediaPipe",
@@ -167,6 +167,9 @@
             <div class="confidence-bar" aria-hidden="true">
               <div class="confidence-fill" id="confFill"></div>
             </div>
+            <div class="candidates-panel" id="candidatesPanel" hidden>
+              <div class="candidates-list" id="candidatesList"></div>
+            </div>
             <div class="hold-row">
               <span id="holdLabel">Segure para auto-adicionar</span>
               <div class="hold-track"><div class="hold-fill" id="holdFill"></div></div>
@@ -181,6 +184,8 @@
 
         <div class="controls" role="group" id="controlsGroup" aria-label="Controles de reconhecimento">
           <button class="btn btn-primary" id="btnStart"><span class="btn-icon"><i data-lucide="play" class="lucide-icon"></i></span> Iniciar câmera</button>
+          <button class="btn btn-video-upload" id="btnVideoUpload" title="Detectar sinais em vídeo"><span class="btn-icon"><i data-lucide="film" class="lucide-icon"></i></span> <span id="btnVideoUploadText">Vídeo</span></button>
+          <input type="file" id="videoFileInput" accept="video/*" hidden>
           <button class="btn" id="btnAdd" disabled><span class="btn-icon"><i data-lucide="plus" class="lucide-icon"></i></span> Adicionar letra</button>
           <button class="btn" id="btnBackspace" disabled><span class="btn-icon"><i data-lucide="delete" class="lucide-icon"></i></span> Apagar</button>
           <button class="btn" id="btnSpace" disabled><span class="btn-icon"><i data-lucide="space" class="lucide-icon"></i></span> Espaço</button>
@@ -231,6 +236,7 @@
         <div class="history-row" id="historyRow">
           <span class="muted" id="historyEmpty">Nenhuma letra detectada ainda.</span>
         </div>
+        <div class="detection-timeline" id="detectionTimeline"></div>
       </article>
 
       <article class="card reveal" style="--delay: 0.2s">

@@ -97,7 +97,13 @@ export const I18N = {
     settingSoundFeedbackHint: "Emitir um som ao detectar/adicionar uma letra.",
     sessionLabel: "sessão",
     themeToggle: "Alternar tema",
-    comingSoon: "Em breve"
+    comingSoon: "Em breve",
+    btnVideoUpload: "Vídeo",
+    btnVideoStop: "Parar vídeo",
+    statusVideoMode: "Detecção em vídeo",
+    toastVideoEnded: "Vídeo finalizado.",
+    handsUnit: "mãos",
+    candidatesTitle: "Candidatos"
   },
   en: {
     pageTitle: "Lexis AI | Browser Sign Language Recognition",
@@ -197,7 +203,13 @@ export const I18N = {
     settingSoundFeedbackHint: "Play a sound when detecting/adding a letter.",
     sessionLabel: "session",
     themeToggle: "Toggle theme",
-    comingSoon: "Coming soon"
+    comingSoon: "Coming soon",
+    btnVideoUpload: "Video",
+    btnVideoStop: "Stop video",
+    statusVideoMode: "Video detection",
+    toastVideoEnded: "Video finished.",
+    handsUnit: "hands",
+    candidatesTitle: "Candidates"
   },
   ur: {
     pageTitle: "Lexis AI | براؤزر میں سائن لینگویج شناخت",

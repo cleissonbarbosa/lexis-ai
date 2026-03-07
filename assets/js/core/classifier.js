@@ -508,7 +508,7 @@ function classifyLibras(f) {
 // ─────────────────────────────────────────────────────────────────────────────
 export function classifyGesture(lms, signLanguageId = "asl") {
   if (!lms || lms.length < 21) {
-    return { letter: null, confidence: 0 };
+    return { letter: null, confidence: 0, candidates: [] };
   }
 
   const f = extractHandFeatures(lms);
@@ -518,9 +518,21 @@ export function classifyGesture(lms, signLanguageId = "asl") {
     : classifyGeneric(f);
 
   if (!results.length) {
-    return { letter: null, confidence: 0 };
+    return { letter: null, confidence: 0, candidates: [] };
   }
 
   results.sort((a, b) => b.conf - a.conf);
-  return { letter: results[0].letter, confidence: results[0].conf };
+
+  // Deduplicate: keep highest confidence per letter
+  const seen = new Set();
+  const unique = [];
+  for (const r of results) {
+    if (!seen.has(r.letter)) {
+      seen.add(r.letter);
+      unique.push(r);
+    }
+  }
+
+  const top = unique.slice(0, 5).map((r) => ({ letter: r.letter, confidence: r.conf }));
+  return { letter: unique[0].letter, confidence: unique[0].conf, candidates: top };
 }
