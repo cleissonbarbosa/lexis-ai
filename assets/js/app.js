@@ -383,7 +383,7 @@ function showReference(letter) {
   });
 }
 
-function updateDetectedDisplay(letter, confidence, holdProgress = 0, holdMessage = t("holdToAutoAdd")) {
+function updateDetectedDisplay(letter, confidence, holdProgress = 0, holdMessage = t("holdToAutoAdd"), candidates = []) {
   ui.detectedDisplay.hidden = false;
 
   if (ui.detectedLetter.textContent !== letter) {
@@ -403,6 +403,24 @@ function updateDetectedDisplay(letter, confidence, holdProgress = 0, holdMessage
   ui.holdFill.style.width = `${Math.round(holdProgress * 100)}%`;
   ui.holdLabel.textContent = holdMessage;
 
+  // Top candidates visualization (inspired by LSTM probability bars)
+  if (candidates.length > 1) {
+    ui.candidatesPanel.hidden = false;
+    ui.candidatesList.innerHTML = candidates.map((c) => {
+      const pct = Math.round(c.confidence * 100);
+      const isTop = c.letter === letter;
+      return `<div class="candidate-row${isTop ? " candidate-top" : ""}">
+        <span class="candidate-letter">${c.letter}</span>
+        <div class="candidate-bar-track">
+          <div class="candidate-bar-fill" style="width:${pct}%"></div>
+        </div>
+        <span class="candidate-pct">${pct}%</span>
+      </div>`;
+    }).join("");
+  } else {
+    ui.candidatesPanel.hidden = true;
+  }
+
   if (letter) {
     showReference(letter);
   }
@@ -414,9 +432,11 @@ function clearDetectedDisplay() {
   ui.confFill.style.width = "0%";
   ui.holdFill.style.width = "0%";
   ui.holdLabel.textContent = t("holdToAutoAdd");
+  ui.candidatesPanel.hidden = true;
+  ui.candidatesList.innerHTML = "";
 }
 
-function drawHandSkeleton(lms, width, height) {
+function drawHandSkeleton(lms, width, height, handIndex = 0) {
   const toCanvas = (landmark) => ({ x: landmark.x * width, y: landmark.y * height });
 
   const connections = [
@@ -428,12 +448,36 @@ function drawHandSkeleton(lms, width, height) {
     [5, 9], [9, 13], [13, 17]
   ];
 
+  // Per-hand color palettes (inspired by LSTM project's body-part coloring)
+  const palettes = [
+    { // Hand 0 (primary) — teal/cyan family
+      thumb: "rgba(226, 232, 240, 0.45)",
+      index: "rgba(45, 212, 191, 0.78)",
+      middle: "rgba(14, 165, 233, 0.7)",
+      ring: "rgba(249, 115, 22, 0.76)",
+      pinky: "rgba(244, 114, 182, 0.68)",
+      tip: "#2dd4bf",
+      joint: "rgba(241, 245, 249, 0.75)"
+    },
+    { // Hand 1 (secondary) — purple/violet family
+      thumb: "rgba(196, 181, 253, 0.5)",
+      index: "rgba(167, 139, 250, 0.78)",
+      middle: "rgba(139, 92, 246, 0.7)",
+      ring: "rgba(236, 72, 153, 0.76)",
+      pinky: "rgba(251, 146, 60, 0.68)",
+      tip: "#a78bfa",
+      joint: "rgba(233, 213, 255, 0.75)"
+    }
+  ];
+
+  const pal = palettes[handIndex % 2];
+
   const getColor = (a, b) => {
-    if (a <= 4 && b <= 4) return "rgba(226, 232, 240, 0.45)";
-    if ((a >= 5 && a <= 8) || (b >= 5 && b <= 8)) return "rgba(45, 212, 191, 0.78)";
-    if ((a >= 9 && a <= 12) || (b >= 9 && b <= 12)) return "rgba(14, 165, 233, 0.7)";
-    if ((a >= 13 && a <= 16) || (b >= 13 && b <= 16)) return "rgba(249, 115, 22, 0.76)";
-    return "rgba(244, 114, 182, 0.68)";
+    if (a <= 4 && b <= 4) return pal.thumb;
+    if ((a >= 5 && a <= 8) || (b >= 5 && b <= 8)) return pal.index;
+    if ((a >= 9 && a <= 12) || (b >= 9 && b <= 12)) return pal.middle;
+    if ((a >= 13 && a <= 16) || (b >= 13 && b <= 16)) return pal.ring;
+    return pal.pinky;
   };
 
   for (const [a, b] of connections) {
@@ -457,17 +501,27 @@ function drawHandSkeleton(lms, width, height) {
     ctx.arc(point.x, point.y, isTip ? 6 : 4, 0, Math.PI * 2);
 
     if (isTip) {
-      ctx.fillStyle = "#2dd4bf";
-      ctx.shadowColor = "#2dd4bf";
+      ctx.fillStyle = pal.tip;
+      ctx.shadowColor = pal.tip;
       ctx.shadowBlur = 10;
     } else {
-      ctx.fillStyle = "rgba(241, 245, 249, 0.75)";
+      ctx.fillStyle = pal.joint;
       ctx.shadowBlur = 0;
     }
 
     ctx.fill();
     ctx.shadowBlur = 0;
   });
+
+  // Draw hand label indicator for multi-hand
+  if (handIndex >= 0 && lms.length >= 1) {
+    const wrist = toCanvas(lms[0]);
+    const label = handIndex === 0 ? "1" : "2";
+    ctx.font = "bold 12px Sora, sans-serif";
+    ctx.fillStyle = pal.tip;
+    ctx.textAlign = "center";
+    ctx.fillText(label, wrist.x, wrist.y + 20);
+  }
 }
 
 function resetAutoAdd() {
@@ -509,6 +563,27 @@ function handleAutoAdd(letter, confidence) {
   }
 }
 
+function updateDetectionTimeline(letter, confidence) {
+  if (!ui.detectionTimeline) return;
+
+  const MAX_TIMELINE = 20;
+  const entry = document.createElement("div");
+  entry.className = "timeline-dot";
+  const hue = letter ? Math.round(confidence * 120) : 0; // red→green
+  entry.style.backgroundColor = letter ? `hsl(${hue}, 70%, 50%)` : "var(--color-muted)";
+  entry.title = letter ? `${letter} (${Math.round(confidence * 100)}%)` : "—";
+
+  if (letter) {
+    entry.textContent = letter;
+  }
+
+  ui.detectionTimeline.appendChild(entry);
+
+  while (ui.detectionTimeline.children.length > MAX_TIMELINE) {
+    ui.detectionTimeline.removeChild(ui.detectionTimeline.firstChild);
+  }
+}
+
 function onHandResults(results) {
   state.frameCount += 1;
 
@@ -524,23 +599,36 @@ function onHandResults(results) {
   ui.canvas.height = ui.video.videoHeight || 480;
   ctx.clearRect(0, 0, ui.canvas.width, ui.canvas.height);
 
-  if (results.multiHandLandmarks?.length) {
-    const landmarks = results.multiHandLandmarks[0];
-    drawHandSkeleton(landmarks, ui.canvas.width, ui.canvas.height);
+  const handCount = results.multiHandLandmarks?.length || 0;
 
+  if (handCount > 0) {
+    // Draw all detected hands with distinct colors
+    for (let i = 0; i < handCount; i++) {
+      drawHandSkeleton(results.multiHandLandmarks[i], ui.canvas.width, ui.canvas.height, i);
+    }
+
+    // Classify primary hand (first detected)
+    const landmarks = results.multiHandLandmarks[0];
     const raw = classifyGesture(landmarks, state.signLanguageId);
     const { letter, confidence } = smoothDetection(state, raw.letter, raw.confidence);
     state.currentLetter = letter;
     state.confidence = confidence;
 
-    updateDetectedDisplay(letter, confidence);
+    updateDetectedDisplay(letter, confidence, 0, t("holdToAutoAdd"), raw.candidates || []);
     handleAutoAdd(letter, confidence);
+    updateDetectionTimeline(letter, confidence);
+
+    // Show multi-hand indicator
+    if (handCount > 1) {
+      ui.fpsText.textContent = `${state.fps} ${t("fpsUnit")} · ${handCount} ${t("handsUnit")}`;
+    }
   } else {
     state.currentLetter = null;
     state.confidence = 0;
     smoothDetection(state, null, 0);
     resetAutoAdd();
     clearDetectedDisplay();
+    updateDetectionTimeline(null, 0);
   }
 
   syncActionButtons();
@@ -566,7 +654,7 @@ async function initMediaPipe() {
   });
 
   hands.setOptions({
-    maxNumHands: 1,
+    maxNumHands: 2,
     modelComplexity: 1,
     minDetectionConfidence: 0.7,
     minTrackingConfidence: 0.5
@@ -700,6 +788,11 @@ function stopCamera() {
 }
 
 function toggleCamera() {
+  if (videoUploadActive) {
+    stopVideoDetection();
+    return;
+  }
+
   if (state.isRunning) {
     stopCamera();
   } else {
@@ -777,6 +870,7 @@ function applyTranslations() {
   ui.btnExportImgText.textContent = t("btnExportImg");
   ui.btnFullscreen.innerHTML = `<span class="btn-icon"><i data-lucide="maximize" class="lucide-icon"></i></span> ${t("btnFullscreen")}`;
   ui.btnExitFullscreen.innerHTML = `<span class="btn-icon"><i data-lucide="x" class="lucide-icon"></i></span> ${t("btnExitFullscreen")}`;
+  if (ui.btnVideoUploadText) ui.btnVideoUploadText.textContent = videoUploadActive ? t("btnVideoStop") : t("btnVideoUpload");
   updateStartButtonLabel();
   refreshIcons();
 
@@ -940,6 +1034,97 @@ function toggleTheme() {
   saveSettings();
 }
 
+// ─── Video Upload Detection ──────────────────────────────────
+let videoUploadActive = false;
+
+async function startVideoDetection(file) {
+  if (!hands) {
+    showToastKey("toastModelLoading");
+    return;
+  }
+
+  if (videoUploadActive) return;
+  videoUploadActive = true;
+
+  const url = URL.createObjectURL(file);
+  const videoEl = ui.video;
+
+  // Stop live camera if running
+  if (state.isRunning) {
+    stopCamera();
+  }
+
+  videoEl.srcObject = null;
+  videoEl.src = url;
+  videoEl.muted = true;
+  videoEl.loop = false;
+
+  ui.placeholder.hidden = true;
+  ui.cameraWrapper.classList.add("active");
+  ui.fpsDisplay.hidden = false;
+  ui.detectedDisplay.hidden = false;
+  state.isRunning = true;
+  state.isVideoMode = true;
+
+  setStatus("live", "statusVideoMode");
+  updateStartButtonLabel();
+  startSessionTimer();
+
+  try {
+    await videoEl.play();
+  } catch {
+    showToastKey("toastCameraError", { error: "Video playback failed" });
+    stopVideoDetection();
+    return;
+  }
+
+  async function processVideoFrame() {
+    if (!videoUploadActive || videoEl.paused || videoEl.ended) {
+      if (videoEl.ended) {
+        showToastKey("toastVideoEnded");
+        stopVideoDetection();
+      }
+      return;
+    }
+
+    try {
+      await hands.send({ image: videoEl });
+    } catch {
+      // Frame send failed, continue
+    }
+
+    requestAnimationFrame(processVideoFrame);
+  }
+
+  requestAnimationFrame(processVideoFrame);
+}
+
+function stopVideoDetection() {
+  videoUploadActive = false;
+  state.isVideoMode = false;
+
+  ui.video.pause();
+  ui.video.removeAttribute("src");
+  ui.video.srcObject = null;
+
+  state.isRunning = false;
+  ui.placeholder.hidden = false;
+  ui.cameraWrapper.classList.remove("active");
+  ui.fpsDisplay.hidden = true;
+  ui.detectedDisplay.hidden = true;
+  state.currentLetter = null;
+  state.confidence = 0;
+
+  updateStartButtonLabel();
+  resetAutoAdd();
+  clearDetectedDisplay();
+  setStatus("off", "statusReady");
+  syncActionButtons();
+  stopSessionTimer();
+
+  ctx.clearRect(0, 0, ui.canvas.width, ui.canvas.height);
+}
+
 function bindEvents() {
   ui.btnStart.addEventListener("click", toggleCamera);
 
@@ -959,6 +1144,23 @@ function bindEvents() {
 
   ui.signLanguageSelect.addEventListener("change", (event) => {
     applySignLanguage(event.target.value);
+  });
+
+  // Video upload detection
+  ui.btnVideoUpload.addEventListener("click", () => {
+    if (videoUploadActive) {
+      stopVideoDetection();
+    } else {
+      ui.videoFileInput.click();
+    }
+  });
+
+  ui.videoFileInput.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      startVideoDetection(file);
+    }
+    event.target.value = "";
   });
 
   window.addEventListener("keydown", handleHotkeys);

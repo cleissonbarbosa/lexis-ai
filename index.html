@@ -167,6 +167,9 @@
             <div class="confidence-bar" aria-hidden="true">
               <div class="confidence-fill" id="confFill"></div>
             </div>
+            <div class="candidates-panel" id="candidatesPanel" hidden>
+              <div class="candidates-list" id="candidatesList"></div>
+            </div>
             <div class="hold-row">
               <span id="holdLabel">Segure para auto-adicionar</span>
               <div class="hold-track"><div class="hold-fill" id="holdFill"></div></div>
@@ -181,6 +184,8 @@
 
         <div class="controls" role="group" id="controlsGroup" aria-label="Controles de reconhecimento">
           <button class="btn btn-primary" id="btnStart"><span class="btn-icon"><i data-lucide="play" class="lucide-icon"></i></span> Iniciar câmera</button>
+          <button class="btn btn-video-upload" id="btnVideoUpload" title="Detectar sinais em vídeo"><span class="btn-icon"><i data-lucide="film" class="lucide-icon"></i></span> <span id="btnVideoUploadText">Vídeo</span></button>
+          <input type="file" id="videoFileInput" accept="video/*" hidden>
           <button class="btn" id="btnAdd" disabled><span class="btn-icon"><i data-lucide="plus" class="lucide-icon"></i></span> Adicionar letra</button>
           <button class="btn" id="btnBackspace" disabled><span class="btn-icon"><i data-lucide="delete" class="lucide-icon"></i></span> Apagar</button>
           <button class="btn" id="btnSpace" disabled><span class="btn-icon"><i data-lucide="space" class="lucide-icon"></i></span> Espaço</button>
@@ -231,6 +236,7 @@
         <div class="history-row" id="historyRow">
           <span class="muted" id="historyEmpty">Nenhuma letra detectada ainda.</span>
         </div>
+        <div class="detection-timeline" id="detectionTimeline"></div>
       </article>
 
       <article class="card reveal" style="--delay: 0.2s">

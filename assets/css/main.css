@@ -1096,3 +1096,149 @@ kbd {
   }
   .toast { bottom: calc(12px + env(safe-area-inset-bottom)); }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Top Candidates Panel (probability bars inspired by LSTM project)
+   ═══════════════════════════════════════════════════════════════ */
+.candidates-panel {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(4px);
+}
+
+.candidates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.candidate-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  opacity: 0.75;
+  transition: opacity var(--anim);
+}
+
+.candidate-row.candidate-top {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.candidate-letter {
+  width: 20px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.candidate-bar-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.candidate-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 200ms ease;
+  background: linear-gradient(90deg, var(--brand) 0%, #2dd4bf 100%);
+}
+
+.candidate-top .candidate-bar-fill {
+  background: linear-gradient(90deg, #2dd4bf 0%, #22d3ee 50%, var(--brand) 100%);
+  box-shadow: 0 0 6px rgba(45, 212, 191, 0.4);
+}
+
+.candidate-pct {
+  width: 32px;
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Detection Timeline (rolling visualization)
+   ═══════════════════════════════════════════════════════════════ */
+.detection-timeline {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  margin-top: 10px;
+  padding: 6px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.detection-timeline::-webkit-scrollbar {
+  display: none;
+}
+
+.detection-timeline:empty {
+  display: none;
+}
+
+.timeline-dot {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #fff;
+  transition: transform var(--anim), opacity var(--anim);
+  animation: timeline-pop 200ms ease;
+}
+
+.timeline-dot:last-child {
+  transform: scale(1.15);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes timeline-pop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Video Upload Button
+   ═══════════════════════════════════════════════════════════════ */
+.btn-video-upload {
+  background: var(--accent-light);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn-video-upload:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+[data-theme="dark"] .btn-video-upload {
+  background: rgba(251, 146, 60, 0.12);
+  color: var(--accent);
+  border-color: rgba(251, 146, 60, 0.3);
+}
+
+[data-theme="dark"] .btn-video-upload:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Multi-hand indicator in FPS display */
+.status-pill .multi-hand-icon {
+  margin-left: 4px;
+  opacity: 0.7;
+}
